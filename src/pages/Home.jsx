@@ -9,7 +9,7 @@ import { toast, ToastContainer } from "react-toastify";
 import { ProgressBar } from "react-bootstrap";
 
 const Home = () => {
-  // Safe read from localStorage
+  
   const sevakDetails = (() => {
     try {
       return JSON.parse(localStorage.getItem("sevakDetails")) || {};

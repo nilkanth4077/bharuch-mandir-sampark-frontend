@@ -22,32 +22,101 @@ const Login = () => {
     });
   };
 
+  // const handleSubmit = async (e) => {
+  //   setLoader(true);
+  //   e.preventDefault();
+  //   try {
+  //     const res = await axios.post(`${BACKEND_ENDPOINT}login/login`, loginData);
+  //     console.log(res);
+  //     if (res.data.status === true) {
+  //       const { sevak } = res.data;
+  //       localStorage.setItem("sevakDetails", JSON.stringify(sevak));
+
+  //       toast.success(res.data.message);
+
+  //       if (res.data.sevak.role !== 'Sant Nirdeshak' && res.data.sevak.role !== 'Admin') {
+  //         navigate("/home");
+  //       }
+  //       else {
+  //         navigate("/annkut-sevak-list");
+  //       }
+  //     } else {
+  //       toast.error("Login Failed: " + res.data.message);
+  //     }
+  //   } catch (error) {
+  //     toast.error("An error occurred: " + error.message);
+  //   } finally {
+  //     setLoader(false);
+  //   }
+  // };
+
   const handleSubmit = async (e) => {
-    setLoader(true);
     e.preventDefault();
-    try {
-      const res = await axios.post(`${BACKEND_ENDPOINT}login/login`, loginData);
-      console.log(res);
-      if (res.data.status === true) {
-        const { sevak } = res.data;
-        localStorage.setItem("sevakDetails", JSON.stringify(sevak));
+    setLoader(true);
 
-        toast.success(res.data.message);
+    // Static allowed users
+    const staticUsers = [
+      {
+        sevak_id: "admin",
+        password: "admin@123",
+        role: "Admin",
+        role_code: "Admin",
+        sevak_target: 100,
+        filled_form: 20,
+        achieved_target: 15
+      },
+      {
+        sevak_id: "sanchalak",
+        password: "sanchalak@123",
+        role: "Sanchalak",
+        sevak_target: 100,
+        filled_form: 20,
+        achieved_target: 15
+      },
+      {
+        sevak_id: "nirdeshak",
+        password: "nirdeshak@123",
+        role: "Nirdeshak",
+        sevak_target: 100,
+        filled_form: 20,
+        achieved_target: 15
+      },
+      {
+        sevak_id: "team1",
+        password: "team1@123",
+        role: "Team",
+        sevak_target: 100,
+        filled_form: 20,
+        achieved_target: 15
+      },
+    ];
 
-        if (res.data.sevak.role !== 'Sant Nirdeshak' && res.data.sevak.role !== 'Admin') {
-          navigate("/home");
-        }
-        else {
-          navigate("/annkut-sevak-list");
-        }
+    // Finding matching user
+    const foundUser = staticUsers.find(
+      (user) =>
+        user.sevak_id === loginData.sevak_id &&
+        user.password === loginData.password
+    );
+
+    if (foundUser) {
+      toast.success("Login Successful");
+
+      // store in localStorage same as backend
+      localStorage.setItem("sevakDetails", JSON.stringify(foundUser));
+
+      // redirect based on role
+      if (foundUser.role === "Admin") {
+        navigate("/admin-home");
+      } else if (foundUser.role === "Sanchalak" || foundUser.role === "Nirdeshak" || foundUser.role === "Nirikshak") {
+        navigate("/leader-home");
       } else {
-        toast.error("Login Failed: " + res.data.message);
+        navigate("/team-home");
       }
-    } catch (error) {
-      toast.error("An error occurred: " + error.message);
-    } finally {
-      setLoader(false);
+    } else {
+      toast.error("Invalid Sevak ID or Password");
     }
+
+    setLoader(false);
   };
 
   return (

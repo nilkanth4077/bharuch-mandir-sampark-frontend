@@ -6,6 +6,9 @@ import ChangePassword from "./pages/ChangePassword";
 import AnnkutSevakList from "./pages/AnnkutSevakList";
 import MandalSevakList from "./pages/MandalSevakList";
 import ReceiptBooks from "./pages/ReceiptBooks";
+import AdminHome from "./pages/AdminHome";
+import LeaderHome from "./pages/LeaderHome";
+import TeamHome from "./pages/TeamHome";
 
 function App() {
   return (
@@ -14,6 +17,9 @@ function App() {
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/home" element={<Home />} />
+          <Route path="/admin-home" element={<AdminHome />} />
+          <Route path="/leader-home" element={<LeaderHome />} />
+          <Route path="/team-home" element={<TeamHome />} />
           <Route path="/change-password" element={<ChangePassword />} />
           <Route path="/annkut-sevak-list" element={<AnnkutSevakList />} />
           <Route path="/receipt-books" element={<ReceiptBooks />} />

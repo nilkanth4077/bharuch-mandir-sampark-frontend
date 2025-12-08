@@ -108,7 +108,7 @@ const Login = () => {
       if (foundUser.role === "Admin") {
         navigate("/admin-home");
       } else if (foundUser.role === "Sanchalak" || foundUser.role === "Nirdeshak" || foundUser.role === "Nirikshak") {
-        navigate("/leader-home");
+        navigate("/supervisor-home");
       } else {
         navigate("/team-home");
       }

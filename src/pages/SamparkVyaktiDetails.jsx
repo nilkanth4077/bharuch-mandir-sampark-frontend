@@ -6,19 +6,16 @@ import AddSupervisorModal from '../components/AddSupervisorModal';
 import ListingTable from '../components/ListingTable';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 
-const AdminHome = () => {
+const SamparkVyaktiDetails = () => {
 
   const navigate = useNavigate();
-  const [showAddSupervisor, setShowAddSupervisor] = useState(false);
 
-  const handleAddSupervisor = () => setShowAddSupervisor(true);
-
-  const showUpdateSupervisorModal = () => {
-    alert("Update Supervisor clicked");
+  const showUpdateVyaktiModal = () => {
+    alert("Update vyakti clicked");
   }
 
-  const showDeleteSupervisorModal = () => {
-    alert("Delete Supervisor clicked");
+  const showDeleteVyaktiModal = () => {
+    alert("Delete vyakti clicked");
   }
 
   return (
@@ -31,11 +28,7 @@ const AdminHome = () => {
           alignItems: 'center',
           padding: '20px'
         }}>
-          <h5 style={{ margin: 0 }}>Manage Supervisors</h5>
-
-          <Button color="warning" onClick={handleAddSupervisor}>
-            Add Supervisor
-          </Button>
+          <h5 style={{ margin: 0 }}>સંપર્ક થયેલ યુવકોની માહિતી (?)</h5>
         </div>
         <div style={{ overflowX: "auto", marginTop: "20px" }}>
           <table style={{ width: "100%", borderCollapse: "collapse", minWidth: "600px" }}>
@@ -43,7 +36,6 @@ const AdminHome = () => {
               <tr style={{ backgroundColor: "#f2f2f2" }}>
                 <th style={{ border: "1px solid #ddd", padding: "10px" }}>ID</th>
                 <th style={{ border: "1px solid #ddd", padding: "10px" }}>Name</th>
-                <th style={{ border: "1px solid #ddd", padding: "10px" }}>Post</th>
                 <th style={{ border: "1px solid #ddd", padding: "10px" }}>Mandal</th>
                 <th style={{ border: "1px solid #ddd", padding: "10px" }}>Phone</th>
                 <th style={{ border: "1px solid #ddd", padding: "10px" }}>Actions</th>
@@ -54,15 +46,14 @@ const AdminHome = () => {
               <tr>
                 <td style={{ border: "1px solid #ddd", padding: "10px" }}>1</td>
                 <td style={{ border: "1px solid #ddd", padding: "10px" }}>Ravi Patel</td>
-                <td style={{ border: "1px solid #ddd", padding: "10px" }}>Nirdeshak</td>
                 <td style={{ border: "1px solid #ddd", padding: "10px" }}>SJ</td>
                 <td style={{ border: "1px solid #ddd", padding: "10px" }}>9876543210</td>
                 <td style={{ border: "1px solid #ddd", padding: "10px", textAlign: "center" }}>
                   <FaEdit style={{ cursor: "pointer", marginRight: "15px" }} size={18} color="green"
-                    onClick={showUpdateSupervisorModal}
+                    onClick={showUpdateVyaktiModal}
                   />
                   <FaTrash style={{ cursor: "pointer" }} size={18} color="red"
-                    onClick={showDeleteSupervisorModal}
+                    onClick={showDeleteVyaktiModal}
                   />
                 </td>
               </tr>
@@ -70,7 +61,6 @@ const AdminHome = () => {
               <tr>
                 <td style={{ border: "1px solid #ddd", padding: "10px" }}>2</td>
                 <td style={{ border: "1px solid #ddd", padding: "10px" }}>Aryan Vyas</td>
-                <td style={{ border: "1px solid #ddd", padding: "10px" }}>Sanchalak</td>
                 <td style={{ border: "1px solid #ddd", padding: "10px" }}>NK</td>
                 <td style={{ border: "1px solid #ddd", padding: "10px" }}>8765432109</td>
                 <td style={{ border: "1px solid #ddd", padding: "10px", textAlign: "center" }}>
@@ -83,11 +73,8 @@ const AdminHome = () => {
         </div>
       </div >
 
-      {showAddSupervisor && (
-        <AddSupervisorModal modal={showAddSupervisor} setModal={setShowAddSupervisor} />
-      )}
     </>
   )
 }
 
-export default AdminHome
+export default SamparkVyaktiDetails;

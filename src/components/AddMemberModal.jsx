@@ -4,32 +4,27 @@ import { BACKEND_ENDPOINT } from "../api/api";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import TextField from "@mui/material/TextField";
-import Radio from "@mui/material/Radio";
-import RadioGroup from "@mui/material/RadioGroup";
 import FormControl from "@mui/material/FormControl";
-import FormLabel from "@mui/material/FormLabel";
 import CircularProgress from "@mui/material/CircularProgress";
 import {
   Button,
-  FormControlLabel,
   InputLabel,
   MenuItem,
   Select,
 } from "@mui/material";
 
-function AddSupervisorModal({ modal, setModal }) {
+function AddMemberModal({ modal, setModal }) {
+
   const me = JSON.parse(localStorage.getItem("sevakDetails")) || {};
   const mySevakCode = me?.sevak_code || me?.sevak_id || "";
 
   const [loader, setLoader] = useState(false);
+  const [errors, setErrors] = useState({});
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
-    post: "",
     mandal: "",
   });
-  const [errors, setErrors] = useState({});
-
   const toggle = () => setModal(!modal);
 
   const handleChange = (e) => {
@@ -42,10 +37,9 @@ function AddSupervisorModal({ modal, setModal }) {
 
   const validateForm = () => {
     const errs = {};
-    if (!formData.post) errs.post = "પોસ્ટ પસંદ કરો";
     if (!formData.mandal) errs.mandal = "મંડળ પસંદ કરો";
-    if (!formData.name) errs.name = "સુપરવાઇજરનું નામ લખો";
-    if (!formData.phone) errs.phone = "સુપરવાઇજરનો ફોન નંબર લખો";
+    if (!formData.name) errs.name = "સંપૂર્ણ નામ લખો";
+    if (!formData.phone) errs.phone = "ફોન નંબર લખો";
 
     return errs;
   };
@@ -65,16 +59,12 @@ function AddSupervisorModal({ modal, setModal }) {
       const payload = {
         name: formData.name,
         phone: formData.phone,
-        post: formData.post,
         mandal: formData.mandal,
         sevak_id: mySevakCode,
       };
-
       alert("Work in progress: " + JSON.stringify(payload));
-
     } catch (error) {
-      console.error("add_supervisor error:", error);
-      toast.error(error || "An error occurred");
+      toast.error("An error occurred: " + error.message);
     } finally {
       setLoader(false);
       toggle();
@@ -83,12 +73,12 @@ function AddSupervisorModal({ modal, setModal }) {
 
   return (
     <div>
-      <Modal isOpen={modal} toggle={toggle}>
-        <ModalHeader toggle={toggle}>Add Supervisor</ModalHeader>
+      <Modal isOpen={modal} toggle={toggle} fade={false}>
+        <ModalHeader toggle={toggle}>Add Member</ModalHeader>
         <ModalBody>
           <FormControl fullWidth variant="outlined" margin="normal">
             <TextField
-              label="સુપરવાઇજરનું નામ"
+              label="નામ"
               name="name"
               type="text"
               value={formData.name}
@@ -103,7 +93,7 @@ function AddSupervisorModal({ modal, setModal }) {
 
           <FormControl fullWidth variant="outlined" margin="normal">
             <TextField
-              label="સુપરવાઇજરનો ફોન નંબર"
+              label="ફોન નંબર"
               name="phone"
               type="tel"
               value={formData.phone || ""}
@@ -118,38 +108,10 @@ function AddSupervisorModal({ modal, setModal }) {
           </FormControl>
 
           <FormControl fullWidth variant="outlined" margin="normal" size="small">
-            <InputLabel id="post-select-label">સુપરવાઇજરની પોસ્ટ</InputLabel>
-            <Select
-              labelId="post-select-label"
-              label="સુપરવાઇજરની પોસ્ટ"
-              name="post"
-              value={formData.post}
-              onChange={handleChange}
-              error={!!errors.post}
-            >
-              <MenuItem key="sant_nirdeshak" value="sant_nirdeshak">
-                સંત નિર્દેશક
-              </MenuItem>
-              <MenuItem key="nirdeshak" value="nirdeshak">
-                નિર્દેશક
-              </MenuItem>
-              <MenuItem key="nirikshak" value="nirikshak">
-                નિરીક્ષક
-              </MenuItem>
-              <MenuItem key="sanchalak" value="sanchalak">
-                સંચાલક
-              </MenuItem>
-            </Select>
-            {errors.post && (
-              <div style={{ color: "#d32f2f", fontSize: 12, marginTop: 4 }}>{errors.post}</div>
-            )}
-          </FormControl>
-
-          <FormControl fullWidth variant="outlined" margin="normal" size="small">
-            <InputLabel id="mandal-select-label">સુપરવાઇજરનું મંડળ</InputLabel>
+            <InputLabel id="mandal-select-label">મંડળ</InputLabel>
             <Select
               labelId="mandal-select-label"
-              label="સુપરવાઇજરનું મંડળ"
+              label="મંડળ"
               name="mandal"
               value={formData.mandal}
               onChange={handleChange}
@@ -192,9 +154,10 @@ function AddSupervisorModal({ modal, setModal }) {
         </ModalFooter>
       </Modal>
 
+      {/* keep if you don’t already have a global container */}
       <ToastContainer position="top-center" autoClose={5000} pauseOnHover theme="colored" />
     </div>
   );
 }
 
-export default AddSupervisorModal;
+export default AddMemberModal;

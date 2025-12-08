@@ -22,22 +22,17 @@ function Header(props) {
     localStorage.removeItem("sevakDetails");
     navigate("/");
   };
-  const handleSevakView = () => {
-    navigate("/annkut-sevak-list");
-    // props.setSevakView(!props.sevakView);
-  };
-  const handleReceiptbook = () => {
-    navigate("/receipt-books");
+  const handleTeamDetails = () => {
+    alert("Manage teams clicked by Admin");
   };
 
-  const handleView = () => {
-    navigate("/home");
-    // props.setSevakView(!props.sevakView);
+  const handleVyaktiDetails = () => {
+    navigate("/sampark-vyakti-details");
   };
 
   const sevakDetails = JSON.parse(localStorage.getItem("sevakDetails"));
   const role = sevakDetails.role;
-  console.log(role,'role');
+  console.log(role, 'role');
   return (
     <div>
       <Navbar
@@ -46,51 +41,80 @@ function Header(props) {
         <NavbarBrand style={{ color: "#ffffffff" }} href="/">
           Sampark 2025
         </NavbarBrand>
-        
-          <NavbarToggler style={{ background: "#ffffff" }} onClick={toggle} />
-          <Collapse isOpen={isOpen} navbar>
-            <Nav className="me-auto" navbar>
-              {role !== "Sevak" && (
+
+        <NavbarToggler style={{ background: "#ffffff" }} onClick={toggle} />
+        <Collapse isOpen={isOpen} navbar>
+          <Nav className="me-auto" navbar>
+            {(role === "Admin") && (
               <>
-                {role !== "Sant Nirdeshak" && (
-                  <>
-                    <NavItem style={{ margin: "5px" }}>
-                      <Button color="warning" onClick={handleView}>
-                        Annkut Seva
-                      </Button>
-                    </NavItem>
-                    {/* {(role !== "Admin" ) && ( */}
-                    <NavItem style={{ margin: "5px" }}>
-                      <Button color="primary" onClick={handleSevakView}>
-                        Annkut Sevak list
-                      </Button>
-                    </NavItem>
-                    {/* // )} */}
-                    {(role === "Admin" || role === "Sanchalak") && (
-                      <NavItem style={{ margin: "5px" }}>
-                        <Button color="secondary" onClick={handleReceiptbook}>
-                          Manage Receipt Books
-                        </Button>
-                      </NavItem>
-                    )}
-                  </>
-                )}
+                <NavItem style={{ margin: "5px" }}>
+                  <a
+                    href="/sampark-vyakti-details"
+                    style={{
+                      display: "inline-block",
+                      padding: "6px 12px",
+                      color: "#fff",
+                      fontWeight: "bold",
+                      textDecoration: "none",
+                      fontSize: "16px",
+                    }}
+                  >
+                    સંપર્ક થયેલા યુવકોની માહિતી
+                  </a>
+                </NavItem>
+
+                <NavItem style={{ margin: "5px" }}>
+                  <a
+                    href="/manage-teams"
+                    style={{
+                      display: "inline-block",
+                      padding: "6px 12px",
+                      color: "#fff",
+                      fontWeight: "bold",
+                      borderRadius: "4px",
+                      textDecoration: "none",
+                      fontSize: "18px",
+                    }}
+                  >
+                    Team Details
+                  </a>
+                </NavItem>
               </>
             )}
+
+            {(role === "Nirdeshak" || role === "Nirikshak" || role === "Sanchalak") && (
               <NavItem style={{ margin: "5px" }}>
-                <Button
+                <a
+                  href="/sampark-vyakti-details"
                   style={{
-                    background: "#ffffff",
-                    color: "black",
+                    display: "inline-block",
+                    padding: "6px 12px",
+                    color: "#fff",
                     fontWeight: "bold",
+                    textDecoration: "none",
+                    fontSize: "16px",
                   }}
-                  onClick={handleLogout}
                 >
-                  Logout
-                </Button>
+                  સંપર્ક થયેલા યુવકોની માહિતી
+                </a>
               </NavItem>
-            </Nav>
-          </Collapse>
+            )}
+
+            {/* Logout always visible */}
+            <NavItem style={{ margin: "5px" }}>
+              <Button
+                style={{
+                  background: "#ffffff",
+                  color: "black",
+                  fontWeight: "bold",
+                }}
+                onClick={handleLogout}
+              >
+                Logout
+              </Button>
+            </NavItem>
+          </Nav>
+        </Collapse>
       </Navbar>
     </div>
   );

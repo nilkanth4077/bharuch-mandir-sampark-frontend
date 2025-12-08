@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import Header from '../components/Header'
-import AddMemberModal from '../components/AddMemberModal';
 import { Button } from 'reactstrap';
 import LeaderTeams from '../components/SupervisorTeams';
 import CreateTeamModal from '../components/CreateTeamModal';
+import AddSamparkSevakModal from '../components/AddSamparkSevakModal';
 
 const SupervisorHome = () => {
   const [showAddMember, setShowAddMember] = useState(false);
@@ -38,7 +38,7 @@ const SupervisorHome = () => {
       </div>
 
       {showAddMember && (
-        <AddMemberModal modal={showAddMember} setModal={setShowAddMember} />
+        <AddSamparkSevakModal modal={showAddMember} setModal={setShowAddMember} />
       )}
 
       {showCreateTeam && (

@@ -23,7 +23,7 @@ function Header(props) {
     navigate("/");
   };
   const handleTeamDetails = () => {
-    alert("Manage teams clicked by Admin");
+    navigate("/manage-teams");
   };
 
   const handleVyaktiDetails = () => {
@@ -45,62 +45,31 @@ function Header(props) {
         <NavbarToggler style={{ background: "#ffffff" }} onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="me-auto" navbar>
-            {(role === "Admin") && (
+            {(role === "Sanchalak" || role === "Admin") && (
               <>
                 <NavItem style={{ margin: "5px" }}>
-                  <a
-                    href="/sampark-vyakti-details"
-                    style={{
-                      display: "inline-block",
-                      padding: "6px 12px",
-                      color: "#fff",
-                      fontWeight: "bold",
-                      textDecoration: "none",
-                      fontSize: "16px",
-                    }}
-                  >
+                  <Button color="warning" onClick={handleVyaktiDetails}>
                     સંપર્ક થયેલા યુવકોની માહિતી
-                  </a>
+                  </Button>
                 </NavItem>
-
+              </>
+            )}
+            {role === "Admin" && (
+              <>
                 <NavItem style={{ margin: "5px" }}>
-                  <a
-                    href="/manage-teams"
-                    style={{
-                      display: "inline-block",
-                      padding: "6px 12px",
-                      color: "#fff",
-                      fontWeight: "bold",
-                      borderRadius: "4px",
-                      textDecoration: "none",
-                      fontSize: "18px",
-                    }}
-                  >
+                  <Button color="primary" onClick={handleTeamDetails}>
                     Team Details
-                  </a>
+                  </Button>
                 </NavItem>
               </>
             )}
 
-            {(role === "Nirdeshak" || role === "Nirikshak" || role === "Sanchalak") && (
-              <NavItem style={{ margin: "5px" }}>
-                <a
-                  href="/sampark-vyakti-details"
-                  style={{
-                    display: "inline-block",
-                    padding: "6px 12px",
-                    color: "#fff",
-                    fontWeight: "bold",
-                    textDecoration: "none",
-                    fontSize: "16px",
-                  }}
-                >
-                  સંપર્ક થયેલા યુવકોની માહિતી
-                </a>
-              </NavItem>
+            {role === "Admin" && (
+              <>
+
+              </>
             )}
 
-            {/* Logout always visible */}
             <NavItem style={{ margin: "5px" }}>
               <Button
                 style={{

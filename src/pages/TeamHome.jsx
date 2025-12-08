@@ -1,167 +1,92 @@
 import React, { useState } from 'react'
 import Header from '../components/Header'
-import { ToastContainer } from 'react-toastify'
-import { FormControl } from 'react-bootstrap'
-import { InputLabel, MenuItem, Select, TextField } from '@mui/material'
+import { Button } from 'reactstrap';
+import { useNavigate } from 'react-router-dom';
+import AddSupervisorModal from '../components/AddSupervisorModal';
+import ListingTable from '../components/ListingTable';
+import { FaEdit, FaTrash } from 'react-icons/fa';
+import AddMemberModal from '../components/AddMemberModal';
 
 const TeamHome = () => {
 
-  const me = JSON.parse(localStorage.getItem("sevakDetails")) || {};
-  const mySevakCode = me?.sevak_code || me?.sevak_id || "";
+  const navigate = useNavigate();
+  const [showAddSupervisor, setShowAddSupervisor] = useState(false);
 
-  const [loader, setLoader] = useState(false);
-  const [formData, setFormData] = useState({
-    name: "",
-    phone: "",
-    post: "",
-    mandal: "",
-  });
-  const [errors, setErrors] = useState({});
+  const handleAddSupervisor = () => setShowAddSupervisor(true);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
+  const showUpdateSupervisorModal = () => {
+    alert("Update Supervisor clicked");
+  }
 
-    let v = value;
-
-    setFormData((p) => ({ ...p, [name]: v }));
-  };
-
-  const validateForm = () => {
-    const errs = {};
-    if (!formData.post) errs.post = "પોસ્ટ પસંદ કરો";
-    if (!formData.mandal) errs.mandal = "મંડળ પસંદ કરો";
-    if (!formData.name) errs.name = "સુપરવાઇજરનું નામ લખો";
-    if (!formData.phone) errs.phone = "સુપરવાઇજરનો ફોન નંબર લખો";
-
-    return errs;
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoader(true);
-
-    const formErrors = validateForm();
-    if (Object.keys(formErrors).length > 0) {
-      setErrors(formErrors);
-      setLoader(false);
-      return;
-    }
-
-    try {
-      const payload = {
-        name: formData.name,
-        phone: formData.phone,
-        post: formData.post,
-        mandal: formData.mandal,
-        sevak_id: mySevakCode,
-      };
-
-      alert("Work in progress: " + JSON.stringify(payload));
-
-    } catch (error) {
-      console.error("add_supervisor error:", error);
-      toast.error(error || "An error occurred");
-    } finally {
-      setLoader(false);
-    }
-  };
+  const showDeleteSupervisorModal = () => {
+    alert("Delete Supervisor clicked");
+  }
 
   return (
     <>
       <Header />
-      <h2>Team Home Page</h2>
-      {/* <div>
-        <form
-          onSubmit={handleSubmit}
-          style={{ maxWidth: 600, margin: "20px auto", padding: 20 }}
-        >
-          <FormControl fullWidth variant="outlined" margin="normal">
-            <TextField
-              label="સુપરવાઇજરનું નામ"
-              name="name"
-              type="text"
-              value={formData.name}
-              onChange={handleChange}
-              variant="outlined"
-              color="secondary"
-              error={!!errors.name}
-              helperText={errors.name}
-              fullWidth
-            />
-          </FormControl>
+      <div style={{ padding: '20px' }}>
+        <div style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          padding: '20px'
+        }}>
+          <h5 style={{ margin: 0 }}>સંપર્ક થયેલા યુવકોની માહિતી</h5>
 
-          <FormControl fullWidth variant="outlined" margin="normal">
-            <TextField
-              label="સુપરવાઇજરનો ફોન નંબર"
-              name="phone"
-              type="tel"
-              value={formData.phone || ""}
-              onChange={handleChange}
-              variant="outlined"
-              color="secondary"
-              error={Boolean(errors.phone)}
-              helperText={errors.phone}
-              fullWidth
-              inputProps={{ inputMode: "numeric", pattern: "[0-9]{10}", maxLength: 10 }}
-            />
-          </FormControl>
+          <Button color="warning" onClick={handleAddSupervisor}>
+            Add Member
+          </Button>
+        </div>
+        <div style={{ overflowX: "auto", marginTop: "20px" }}>
+          <table style={{ width: "100%", borderCollapse: "collapse", minWidth: "600px" }}>
+            <thead>
+              <tr style={{ backgroundColor: "#f2f2f2" }}>
+                <th style={{ border: "1px solid #ddd", padding: "10px" }}>ID</th>
+                <th style={{ border: "1px solid #ddd", padding: "10px" }}>Name</th>
+                <th style={{ border: "1px solid #ddd", padding: "10px" }}>Post</th>
+                <th style={{ border: "1px solid #ddd", padding: "10px" }}>Mandal</th>
+                <th style={{ border: "1px solid #ddd", padding: "10px" }}>Phone</th>
+                <th style={{ border: "1px solid #ddd", padding: "10px" }}>Actions</th>
+              </tr>
+            </thead>
 
-          <FormControl fullWidth variant="outlined" margin="normal" size="small">
-            <InputLabel id="post-select-label">સુપરવાઇજરની પોસ્ટ</InputLabel>
-            <Select
-              labelId="post-select-label"
-              label="સુપરવાઇજરની પોસ્ટ"
-              name="post"
-              value={formData.post}
-              onChange={handleChange}
-              error={!!errors.post}
-            >
-              <MenuItem key="sant_nirdeshak" value="sant_nirdeshak">
-                સંત નિર્દેશક
-              </MenuItem>
-              <MenuItem key="nirdeshak" value="nirdeshak">
-                નિર્દેશક
-              </MenuItem>
-              <MenuItem key="nirikshak" value="nirikshak">
-                નિરીક્ષક
-              </MenuItem>
-              <MenuItem key="sanchalak" value="sanchalak">
-                સંચાલક
-              </MenuItem>
-            </Select>
-            {errors.post && (
-              <div style={{ color: "#d32f2f", fontSize: 12, marginTop: 4 }}>{errors.post}</div>
-            )}
-          </FormControl>
+            <tbody>
+              <tr>
+                <td style={{ border: "1px solid #ddd", padding: "10px" }}>1</td>
+                <td style={{ border: "1px solid #ddd", padding: "10px" }}>Ravi Patel</td>
+                <td style={{ border: "1px solid #ddd", padding: "10px" }}>Nirdeshak</td>
+                <td style={{ border: "1px solid #ddd", padding: "10px" }}>SJ</td>
+                <td style={{ border: "1px solid #ddd", padding: "10px" }}>9876543210</td>
+                <td style={{ border: "1px solid #ddd", padding: "10px", textAlign: "center" }}>
+                  <FaEdit style={{ cursor: "pointer", marginRight: "15px" }} size={18} color="green"
+                    onClick={showUpdateSupervisorModal}
+                  />
+                  <FaTrash style={{ cursor: "pointer" }} size={18} color="red"
+                    onClick={showDeleteSupervisorModal}
+                  />
+                </td>
+              </tr>
 
-          <FormControl fullWidth variant="outlined" margin="normal" size="small">
-            <InputLabel id="mandal-select-label">સુપરવાઇજરનું મંડળ</InputLabel>
-            <Select
-              labelId="mandal-select-label"
-              label="સુપરવાઇજરનું મંડળ"
-              name="mandal"
-              value={formData.mandal}
-              onChange={handleChange}
-              error={!!errors.mandal}
-            >
-              <MenuItem key="SJ" value="SJ">
-                સહજાનંદ (SJ)
-              </MenuItem>
-              <MenuItem key="NK" value="NK">
-                નારાયણકુંજ (NK)
-              </MenuItem>
-              <MenuItem key="SRB" value="SRB">
-                સુરભિ (SRB)
-              </MenuItem>
-            </Select>
-            {errors.mandal && (
-              <div style={{ color: "#d32f2f", fontSize: 12, marginTop: 4 }}>{errors.mandal}</div>
-            )}
-          </FormControl>
-        </form>
+              <tr>
+                <td style={{ border: "1px solid #ddd", padding: "10px" }}>2</td>
+                <td style={{ border: "1px solid #ddd", padding: "10px" }}>Aryan Vyas</td>
+                <td style={{ border: "1px solid #ddd", padding: "10px" }}>Sanchalak</td>
+                <td style={{ border: "1px solid #ddd", padding: "10px" }}>NK</td>
+                <td style={{ border: "1px solid #ddd", padding: "10px" }}>8765432109</td>
+                <td style={{ border: "1px solid #ddd", padding: "10px", textAlign: "center" }}>
+                  <FaEdit style={{ cursor: "pointer", marginRight: "15px" }} size={18} color="green" />
+                  <FaTrash style={{ cursor: "pointer" }} size={18} color="red" />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div >
 
-        <ToastContainer position="top-center" autoClose={5000} pauseOnHover theme="colored" />
-      </div> */}
+      {showAddSupervisor && (
+        <AddMemberModal modal={showAddSupervisor} setModal={setShowAddSupervisor} />
+      )}
     </>
   )
 }

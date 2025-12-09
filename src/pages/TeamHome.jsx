@@ -6,6 +6,7 @@ import AddSupervisorModal from '../components/AddSupervisorModal';
 import ListingTable from '../components/ListingTable';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import AddMemberModal from '../components/AddMemberModal';
+import { ProgressBar } from 'react-bootstrap';
 
 const TeamHome = () => {
 
@@ -13,6 +14,11 @@ const TeamHome = () => {
   const [showAddSupervisor, setShowAddSupervisor] = useState(false);
 
   const handleAddSupervisor = () => setShowAddSupervisor(true);
+
+  let sevak_target = 45;
+  let achievedTarget = 2;
+  const progress = sevak_target > 0 ? (achievedTarget / sevak_target) * 100 : 0;
+  const progressClamped = Math.max(0, Math.min(100, Math.round(progress)));
 
   const showUpdateSupervisorModal = () => {
     alert("Update Supervisor clicked");
@@ -25,12 +31,47 @@ const TeamHome = () => {
   return (
     <>
       <Header />
-      <div style={{ padding: '20px' }}>
+
+      <div
+        style={{
+          display: "flex",
+          textAlign: "left",
+          fontFamily: "system-ui",
+          justifyContent: "space-around",
+        }}
+      >
+        <div style={{ width: "100%", padding: "10px", fontWeight: 600 }}>
+          <h6 style={{ fontWeight: 600 }}>Achieved Target</h6>
+          <ProgressBar
+            now={progressClamped}
+            label={`${progressClamped}%`}
+            className="custom-progress-bar"
+          />
+        </div>
+      </div>
+
+      <div
+        style={{
+          display: "flex",
+          textAlign: "left",
+          fontFamily: "system-ui",
+          margin: "0 12px",
+          justifyContent: "space-between",
+        }}
+      >
+        <div>
+          <h6>Target : {sevak_target}</h6>
+          <h6>Filled form : {achievedTarget}</h6>
+        </div>
+      </div>
+
+
+      <div>
         <div style={{
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
-          padding: '20px'
+          margin: '15px 12px',
         }}>
           <h5 style={{ margin: 0 }}>સંપર્ક થયેલા યુવકોની માહિતી</h5>
 
@@ -44,10 +85,9 @@ const TeamHome = () => {
               <tr style={{ backgroundColor: "#f2f2f2" }}>
                 <th style={{ border: "1px solid #ddd", padding: "10px" }}>ID</th>
                 <th style={{ border: "1px solid #ddd", padding: "10px" }}>Name</th>
-                <th style={{ border: "1px solid #ddd", padding: "10px" }}>Post</th>
+                <th style={{ border: "1px solid #ddd", padding: "10px" }}>Address</th>
                 <th style={{ border: "1px solid #ddd", padding: "10px" }}>Mandal</th>
                 <th style={{ border: "1px solid #ddd", padding: "10px" }}>Phone</th>
-                <th style={{ border: "1px solid #ddd", padding: "10px" }}>Actions</th>
               </tr>
             </thead>
 
@@ -55,29 +95,17 @@ const TeamHome = () => {
               <tr>
                 <td style={{ border: "1px solid #ddd", padding: "10px" }}>1</td>
                 <td style={{ border: "1px solid #ddd", padding: "10px" }}>Ravi Patel</td>
-                <td style={{ border: "1px solid #ddd", padding: "10px" }}>Nirdeshak</td>
+                <td style={{ border: "1px solid #ddd", padding: "10px" }}>B14 Tulsidham Society 390011</td>
                 <td style={{ border: "1px solid #ddd", padding: "10px" }}>SJ</td>
                 <td style={{ border: "1px solid #ddd", padding: "10px" }}>9876543210</td>
-                <td style={{ border: "1px solid #ddd", padding: "10px", textAlign: "center" }}>
-                  <FaEdit style={{ cursor: "pointer", marginRight: "15px" }} size={18} color="green"
-                    onClick={showUpdateSupervisorModal}
-                  />
-                  <FaTrash style={{ cursor: "pointer" }} size={18} color="red"
-                    onClick={showDeleteSupervisorModal}
-                  />
-                </td>
               </tr>
 
               <tr>
                 <td style={{ border: "1px solid #ddd", padding: "10px" }}>2</td>
                 <td style={{ border: "1px solid #ddd", padding: "10px" }}>Aryan Vyas</td>
-                <td style={{ border: "1px solid #ddd", padding: "10px" }}>Sanchalak</td>
+                <td style={{ border: "1px solid #ddd", padding: "10px" }}>Tulsidham Society 390011</td>
                 <td style={{ border: "1px solid #ddd", padding: "10px" }}>NK</td>
                 <td style={{ border: "1px solid #ddd", padding: "10px" }}>8765432109</td>
-                <td style={{ border: "1px solid #ddd", padding: "10px", textAlign: "center" }}>
-                  <FaEdit style={{ cursor: "pointer", marginRight: "15px" }} size={18} color="green" />
-                  <FaTrash style={{ cursor: "pointer" }} size={18} color="red" />
-                </td>
               </tr>
             </tbody>
           </table>

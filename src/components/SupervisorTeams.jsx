@@ -1,8 +1,12 @@
 import React, { useState } from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
+import EditMemberModal from "./EditMemberModal";
 
 export default function SupervisorTeams() {
     const [openTeam, setOpenTeam] = useState(null);
+    const [showEditMember, setShowEditMember] = useState(false);
+
+    const handleEditMember = () => setShowEditMember(true);
 
     const toggleOpen = (teamId) => {
         setOpenTeam(openTeam === teamId ? null : teamId);
@@ -14,17 +18,17 @@ export default function SupervisorTeams() {
                 id: 1,
                 teamName: "Team A",
                 members: [
-                    { id: 101, name: "Amit", phone: "9999999999", mandal: "SJ" },
-                    { id: 102, name: "Rahul", phone: "8888888888", mandal: "NK" },
-                    { id: 103, name: "Kirtan", phone: "7777777777", mandal: "SRB" }
+                    { id: 101, name: "Amit", phone: "9999999999", address: "XYZ", mandal: "SJ" },
+                    { id: 102, name: "Rahul", phone: "8888888888", address: "XYZ", mandal: "NK" },
+                    { id: 103, name: "Kirtan", phone: "7777777777", address: "XYZ", mandal: "SRB" }
                 ]
             },
             {
                 id: 2,
                 teamName: "Team B",
                 members: [
-                    { id: 201, name: "Vraj", phone: "9992221110", mandal: "NK" },
-                    { id: 202, name: "Dev", phone: "9090909090", mandal: "SRB" }
+                    { id: 201, name: "Vraj", phone: "9992221110", address: "XYZ", mandal: "NK" },
+                    { id: 202, name: "Dev", phone: "9090909090", address: "XYZ", mandal: "SRB" }
                 ]
             }
         ]
@@ -39,92 +43,94 @@ export default function SupervisorTeams() {
     }
 
     return (
-        <div style={{ width: "90%", margin: "auto", marginTop: "30px" }}>
+        <>
+            <div style={{ width: "90%", margin: "auto", marginTop: "30px" }}>
 
-            <h2 style={{ marginBottom: "20px" }}>
-                Teams You Lead
-            </h2>
+                <h2 style={{ marginBottom: "20px" }}>
+                    Teams You Lead
+                </h2>
 
-            {leaderData.teams.map(team => (
-                <div
-                    key={team.id}
-                    style={{
-                        border: "1px solid #ddd",
-                        borderRadius: "8px",
-                        marginBottom: "12px",
-                        background: "#fff",
-                        boxShadow: "0 2px 5px rgba(0,0,0,0.05)"
-                    }}
-                >
+                {leaderData.teams.map(team => (
                     <div
-                        onClick={() => toggleOpen(team.id)}
+                        key={team.id}
                         style={{
-                            padding: "12px 16px",
-                            fontWeight: "600",
-                            display: "flex",
-                            justifyContent: "space-between",
-                            cursor: "pointer",
-                            background: "#fafafa",
-                            fontSize: "17px"
+                            border: "1px solid #ddd",
+                            borderRadius: "8px",
+                            marginBottom: "12px",
+                            background: "#fff",
+                            boxShadow: "0 2px 5px rgba(0,0,0,0.05)"
                         }}
                     >
-                        {team.teamName}
-                        <span>{openTeam === team.id ? "▲" : "▼"}</span>
-                    </div>
-
-                    {openTeam === team.id && (
-                        <div style={{ padding: "12px", overflowX: "auto" }}>
-
-                            <table
-                                style={{
-                                    width: "100%",
-                                    borderCollapse: "collapse",
-                                    textAlign: "left"
-                                }}
-                            >
-                                <thead>
-                                    <tr style={{ background: "#f5f5f5" }}>
-                                        <th style={th}>Name</th>
-                                        <th style={th}>Phone</th>
-                                        <th style={th}>Mandal</th>
-                                        <th style={th}>Actions</th>
-                                    </tr>
-                                </thead>
-
-                                <tbody>
-                                    {team.members.map(m => (
-                                        <tr key={m.id}>
-                                            <td style={td}>{m.name}</td>
-                                            <td style={td}>{m.phone}</td>
-                                            <td style={td}>{m.mandal}</td>
-                                            <td style={{ border: "1px solid #ddd", padding: "10px", textAlign: "center", whiteSpace: "nowrap" }}>
-                                                <FaEdit
-                                                    style={{
-                                                        cursor: "pointer",
-                                                        marginRight: "15px"
-                                                    }}
-                                                    size={18}
-                                                    color="green"
-                                                    onClick={showUpdateMemberModal}
-                                                />
-                                                <FaTrash
-                                                    style={{ cursor: "pointer" }}
-                                                    size={18}
-                                                    color="red"
-                                                    onClick={showDeleteMemberModal}
-                                                />
-                                            </td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-
-                            </table>
+                        <div
+                            onClick={() => toggleOpen(team.id)}
+                            style={{
+                                padding: "12px 16px",
+                                fontWeight: "600",
+                                display: "flex",
+                                justifyContent: "space-between",
+                                cursor: "pointer",
+                                background: "#fafafa",
+                                fontSize: "17px"
+                            }}
+                        >
+                            {team.teamName}
+                            <span>{openTeam === team.id ? "▲" : "▼"}</span>
                         </div>
-                    )}
-                </div>
-            ))}
 
-        </div>
+                        {openTeam === team.id && (
+                            <div style={{ padding: "12px", overflowX: "auto" }}>
+
+                                <table
+                                    style={{
+                                        width: "100%",
+                                        borderCollapse: "collapse",
+                                        textAlign: "left"
+                                    }}
+                                >
+                                    <thead>
+                                        <tr style={{ background: "#f5f5f5" }}>
+                                            <th style={th}>Name</th>
+                                            <th style={th}>Phone</th>
+                                            <th style={th}>Mandal</th>
+                                            <th style={th}>Address</th>
+                                            <th style={th}>Actions</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        {team.members.map(m => (
+                                            <tr key={m.id}>
+                                                <td style={td}>{m.name}</td>
+                                                <td style={td}>{m.phone}</td>
+                                                <td style={td}>{m.mandal}</td>
+                                                <td style={td}>{m.address}</td>
+                                                <td style={{ border: "1px solid #ddd", padding: "10px", textAlign: "center", whiteSpace: "nowrap" }}>
+                                                    <FaEdit
+                                                        style={{
+                                                            cursor: "pointer",
+                                                            marginRight: "15px"
+                                                        }}
+                                                        size={18}
+                                                        color="green"
+                                                        onClick={handleEditMember}
+                                                    />
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+
+                                </table>
+                            </div>
+                        )}
+                    </div>
+                ))}
+
+            </div>
+
+            {showEditMember && (
+                <EditMemberModal modal={showEditMember} setModal={setShowEditMember} />
+            )}
+        </>
     );
 }
 

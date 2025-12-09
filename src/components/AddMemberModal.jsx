@@ -65,7 +65,7 @@ function AddMemberModal({ modal, setModal }) {
         address: formData.address,
         sevak_id: mySevakCode,
       };
-      alert("Work in progress: " + JSON.stringify(payload));
+      alert("New member added: " + JSON.stringify(payload));
     } catch (error) {
       toast.error("An error occurred: " + error.message);
     } finally {

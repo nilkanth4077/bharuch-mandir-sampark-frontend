@@ -30,6 +30,10 @@ function Header(props) {
     navigate("/sampark-vyakti-details");
   };
 
+  const handleManageSSDetails = () => {
+    navigate("/manage-sampark-sevak-details");
+  };
+
   const sevakDetails = JSON.parse(localStorage.getItem("sevakDetails"));
   const role = sevakDetails.role;
   console.log(role, 'role');
@@ -45,17 +49,22 @@ function Header(props) {
         <NavbarToggler style={{ background: "#ffffff" }} onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="me-auto" navbar>
-            {(role === "Sanchalak" || role === "Admin") && (
+            {(role === "Sanchalak") && (
               <>
                 <NavItem style={{ margin: "5px" }}>
-                  <Button color="warning" onClick={handleVyaktiDetails}>
-                    સંપર્ક થયેલા યુવકોની માહિતી
+                  <Button color="warning" onClick={handleManageSSDetails}>
+                    Manage Sampark Sevak
                   </Button>
                 </NavItem>
               </>
             )}
             {role === "Admin" && (
               <>
+                <NavItem style={{ margin: "5px" }}>
+                  <Button color="warning" onClick={handleVyaktiDetails}>
+                    સંપર્ક થયેલા યુવકોની માહિતી
+                  </Button>
+                </NavItem>
                 <NavItem style={{ margin: "5px" }}>
                   <Button color="primary" onClick={handleTeamDetails}>
                     Team Details

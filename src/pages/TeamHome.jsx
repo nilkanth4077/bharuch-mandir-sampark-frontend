@@ -103,7 +103,7 @@ const TeamHome = () => {
               <tr>
                 <td style={{ border: "1px solid #ddd", padding: "10px" }}>2</td>
                 <td style={{ border: "1px solid #ddd", padding: "10px" }}>Aryan Vyas</td>
-                <td style={{ border: "1px solid #ddd", padding: "10px" }}>Tulsidham Society 390011</td>
+                <td style={{ border: "1px solid #ddd", padding: "10px" }}>A-22 Opp. Jay Ambe School 390011</td>
                 <td style={{ border: "1px solid #ddd", padding: "10px" }}>NK</td>
                 <td style={{ border: "1px solid #ddd", padding: "10px" }}>8765432109</td>
               </tr>

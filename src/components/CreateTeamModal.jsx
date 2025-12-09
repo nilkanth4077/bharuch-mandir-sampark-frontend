@@ -21,8 +21,6 @@ function CreateTeamModal({ modal, setModal }) {
   const [errors, setErrors] = useState({});
   const [formData, setFormData] = useState({
     name: "",
-    phone: "",
-    mandal: "",
   });
   const toggle = () => setModal(!modal);
 
@@ -36,9 +34,7 @@ function CreateTeamModal({ modal, setModal }) {
 
   const validateForm = () => {
     const errs = {};
-    if (!formData.mandal) errs.mandal = "મંડળ પસંદ કરો";
-    if (!formData.name) errs.name = "સંપૂર્ણ નામ લખો";
-    if (!formData.phone) errs.phone = "ફોન નંબર લખો";
+    if (!formData.name) errs.name = "ટીમનું નામ લખો";
 
     return errs;
   };
@@ -57,8 +53,6 @@ function CreateTeamModal({ modal, setModal }) {
     try {
       const payload = {
         name: formData.name,
-        phone: formData.phone,
-        mandal: formData.mandal,
       };
       alert("Work in progress: " + JSON.stringify(payload));
     } catch (error) {
@@ -72,11 +66,11 @@ function CreateTeamModal({ modal, setModal }) {
   return (
     <div>
       <Modal isOpen={modal} toggle={toggle} fade={false}>
-        <ModalHeader toggle={toggle}>Work in progress...</ModalHeader>
-        {/* <ModalBody>
+        <ModalHeader toggle={toggle}>Create Team</ModalHeader>
+        <ModalBody>
           <FormControl fullWidth variant="outlined" margin="normal">
             <TextField
-              label="નામ"
+              label="ટીમનું નામ"
               name="name"
               type="text"
               value={formData.name}
@@ -89,46 +83,6 @@ function CreateTeamModal({ modal, setModal }) {
             />
           </FormControl>
 
-          <FormControl fullWidth variant="outlined" margin="normal">
-            <TextField
-              label="ફોન નંબર"
-              name="phone"
-              type="tel"
-              value={formData.phone || ""}
-              onChange={handleChange}
-              variant="outlined"
-              color="secondary"
-              error={Boolean(errors.phone)}
-              helperText={errors.phone}
-              fullWidth
-              inputProps={{ inputMode: "numeric", pattern: "[0-9]{10}", maxLength: 10 }}
-            />
-          </FormControl>
-
-          <FormControl fullWidth variant="outlined" margin="normal" size="small">
-            <InputLabel id="mandal-select-label">મંડળ</InputLabel>
-            <Select
-              labelId="mandal-select-label"
-              label="મંડળ"
-              name="mandal"
-              value={formData.mandal}
-              onChange={handleChange}
-              error={!!errors.mandal}
-            >
-              <MenuItem key="SJ" value="SJ">
-                સહજાનંદ (SJ)
-              </MenuItem>
-              <MenuItem key="NK" value="NK">
-                નારાયણકુંજ (NK)
-              </MenuItem>
-              <MenuItem key="SRB" value="SRB">
-                સુરભિ (SRB)
-              </MenuItem>
-            </Select>
-            {errors.mandal && (
-              <div style={{ color: "#d32f2f", fontSize: 12, marginTop: 4 }}>{errors.mandal}</div>
-            )}
-          </FormControl>
         </ModalBody>
 
         <ModalFooter>
@@ -149,7 +103,7 @@ function CreateTeamModal({ modal, setModal }) {
           >
             Cancel
           </Button>
-        </ModalFooter> */}
+        </ModalFooter>
       </Modal>
 
       {/* keep if you don’t already have a global container */}

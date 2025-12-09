@@ -34,16 +34,32 @@ function Header(props) {
     navigate("/manage-sampark-sevak-details");
   };
 
+  const handleManageSupervisors = () => {
+    navigate("/manage-supervisor");
+  }
+
   const sevakDetails = JSON.parse(localStorage.getItem("sevakDetails"));
   const role = sevakDetails.role;
   console.log(role, 'role');
+
+  const roleRoutes = {
+    Admin: "/admin-home",
+    Nirdeshak: "/nirdeshak-home",
+    Nirikshak: "/nirikshak-home",
+    Sanchalak: "/sanchalak-home",
+    Team: "/team-home",
+  };
+
+  const redirectUrl = roleRoutes[role] || "/team-home";
+
   return (
     <div>
       <Navbar
         style={{ background: "#ED3237", marginBottom: "7px", zIndex: 1000 }}
       >
-        <NavbarBrand style={{ color: "#ffffffff" }} href="/">
-          Sampark 2025
+        <NavbarBrand style={{ color: "#ffffffff" }} href={redirectUrl}>
+          <i className="bi bi-house-door-fill"></i>
+          <span style={{ margin: "10px" }}>Sampark 2025</span>
         </NavbarBrand>
 
         <NavbarToggler style={{ background: "#ffffff" }} onClick={toggle} />
@@ -67,7 +83,12 @@ function Header(props) {
                 </NavItem>
                 <NavItem style={{ margin: "5px" }}>
                   <Button color="primary" onClick={handleTeamDetails}>
-                    Team Details
+                    Manage Teams
+                  </Button>
+                </NavItem>
+                <NavItem style={{ margin: "5px" }}>
+                  <Button color="primary" onClick={handleManageSupervisors}>
+                    Manage Supervisors
                   </Button>
                 </NavItem>
               </>

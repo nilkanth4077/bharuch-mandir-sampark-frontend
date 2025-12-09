@@ -32,7 +32,7 @@ export default function ManageTeams() {
     };
 
     const showUpdateMemberModal = () => {
-        alert("Update Member clicked");
+        alert("Update Member clicked by admin");
     }
 
     const showDeleteMemberModal = () => {
@@ -45,7 +45,7 @@ export default function ManageTeams() {
             <div style={{ width: "90%", margin: "auto", marginTop: "30px" }}>
 
                 <h2 style={{ marginBottom: "20px" }}>
-                    Team Details
+                    Manage Teams
                 </h2>
 
                 {leaderData.teams.map(team => (

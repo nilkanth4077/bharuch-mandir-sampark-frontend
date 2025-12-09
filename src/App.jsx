@@ -14,6 +14,10 @@ import AdminManageTeams from "./pages/ManageTeams";
 import SupervisorHome from "./pages/SupervisorHome";
 import ManageTeams from "./pages/ManageTeams";
 import ManageSamparSevakkDetails from "./pages/ManageSamparSevakkDetails";
+import ManageSupervisors from "./pages/ManageSupervisors";
+import NirdeshakHome from "./pages/NirdeshakHome";
+import NirikshakHome from "./pages/NirikshakHome";
+import SanchalakHome from "./pages/SanchalakHome";
 
 function App() {
   return (
@@ -24,6 +28,9 @@ function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/admin-home" element={<AdminHome />} />
           <Route path="/supervisor-home" element={<SupervisorHome />} />
+          <Route path="/nirdeshak-home" element={<NirdeshakHome />} />
+          <Route path="/nirikshak-home" element={<NirikshakHome />} />
+          <Route path="/sanchalak-home" element={<SanchalakHome />} />
           <Route path="/team-home" element={<TeamHome />} />
           <Route path="/change-password" element={<ChangePassword />} />
           <Route path="/annkut-sevak-list" element={<AnnkutSevakList />} />
@@ -32,6 +39,7 @@ function App() {
           <Route path="/sampark-vyakti-details" element={<SamparkVyaktiDetails />} />
           <Route path="/manage-sampark-sevak-details" element={<ManageSamparSevakkDetails />} />
           <Route path="/manage-teams" element={<ManageTeams />} />
+          <Route path="/manage-supervisor" element={<ManageSupervisors />} />
         </Routes>
       </Router>
     </div>

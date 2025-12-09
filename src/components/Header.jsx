@@ -82,12 +82,12 @@ function Header(props) {
                   </Button>
                 </NavItem>
                 <NavItem style={{ margin: "5px" }}>
-                  <Button color="primary" onClick={handleTeamDetails}>
+                  <Button color="warning" onClick={handleTeamDetails}>
                     Manage Teams
                   </Button>
                 </NavItem>
                 <NavItem style={{ margin: "5px" }}>
-                  <Button color="primary" onClick={handleManageSupervisors}>
+                  <Button color="warning" onClick={handleManageSupervisors}>
                     Manage Supervisors
                   </Button>
                 </NavItem>

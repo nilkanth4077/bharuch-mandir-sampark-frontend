@@ -93,7 +93,7 @@ export default function SupervisorMandals() {
 
                         {groupedByXetra.map(([xetra, rows]) => (
                             <Box mb={3} key={xetra}>
-                                <Typography align="center" fontWeight={700}>{xetra}</Typography>
+                                <Typography align="center" fontWeight={800} fontSize={23}>{xetra}</Typography>
 
                                 <Grid container spacing={2} mt={1}>
                                     {rows.map((m, i) => (
@@ -127,7 +127,6 @@ export default function SupervisorMandals() {
                         <div style={{ width: "90%", margin: "auto", marginTop: "30px" }}>
                             <Box display="flex" justifyContent="space-between" mb={2}>
                                 <Box display="flex" gap={1}>
-                                    {isLeader && <Button onClick={handleBackToMandals}>Back</Button>}
                                     {selectedMandal && <Chip label={"Mandal: " + selectedMandal} />}
                                 </Box>
 

@@ -13,6 +13,7 @@ import SamparkVyaktiDetails from "./pages/SamparkVyaktiDetails";
 import AdminManageTeams from "./pages/ManageTeams";
 import SupervisorHome from "./pages/SupervisorHome";
 import ManageTeams from "./pages/ManageTeams";
+import ManageSamparSevakkDetails from "./pages/ManageSamparSevakkDetails";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
           <Route path="/receipt-books" element={<ReceiptBooks />} />
           <Route path="/mandal-sevak-list" element={<MandalSevakList />} />
           <Route path="/sampark-vyakti-details" element={<SamparkVyaktiDetails />} />
+          <Route path="/manage-sampark-sevak-details" element={<ManageSamparSevakkDetails />} />
           <Route path="/manage-teams" element={<ManageTeams />} />
         </Routes>
       </Router>

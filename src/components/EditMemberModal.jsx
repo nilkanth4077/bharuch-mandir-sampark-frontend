@@ -13,7 +13,7 @@ import {
   Select,
 } from "@mui/material";
 
-function AddSamparkSevakModal({ modal, setModal }) {
+function EditMemberModal({ modal, setModal }) {
 
   const me = JSON.parse(localStorage.getItem("sevakDetails")) || {};
   const mySevakCode = me?.sevak_code || me?.sevak_id || "";
@@ -24,6 +24,7 @@ function AddSamparkSevakModal({ modal, setModal }) {
     name: "",
     phone: "",
     mandal: "",
+    // address: "",
   });
   const toggle = () => setModal(!modal);
 
@@ -40,6 +41,7 @@ function AddSamparkSevakModal({ modal, setModal }) {
     if (!formData.mandal) errs.mandal = "મંડળ પસંદ કરો";
     if (!formData.name) errs.name = "સંપૂર્ણ નામ લખો";
     if (!formData.phone) errs.phone = "ફોન નંબર લખો";
+    // if (!formData.address) errs.address = "સરનામું લખો";
 
     return errs;
   };
@@ -60,9 +62,10 @@ function AddSamparkSevakModal({ modal, setModal }) {
         name: formData.name,
         phone: formData.phone,
         mandal: formData.mandal,
+        // address: formData.address,
         sevak_id: mySevakCode,
       };
-      alert("Work in progress: " + JSON.stringify(payload));
+      alert("Updated details: " + JSON.stringify(payload));
     } catch (error) {
       toast.error("An error occurred: " + error.message);
     } finally {
@@ -74,7 +77,7 @@ function AddSamparkSevakModal({ modal, setModal }) {
   return (
     <div>
       <Modal isOpen={modal} toggle={toggle} fade={false}>
-        <ModalHeader toggle={toggle}>Add Sampark Sevak</ModalHeader>
+        <ModalHeader toggle={toggle}>Edit Member</ModalHeader>
         <ModalBody>
           <FormControl fullWidth variant="outlined" margin="normal">
             <TextField
@@ -106,6 +109,21 @@ function AddSamparkSevakModal({ modal, setModal }) {
               inputProps={{ inputMode: "numeric", pattern: "[0-9]{10}", maxLength: 10 }}
             />
           </FormControl>
+
+          {/* <FormControl fullWidth variant="outlined" margin="normal">
+            <TextField
+              label="સરનામું"
+              name="address"
+              type="text"
+              value={formData.address}
+              onChange={handleChange}
+              variant="outlined"
+              color="secondary"
+              error={!!errors.address}
+              helperText={errors.address}
+              fullWidth
+            />
+          </FormControl> */}
 
           <FormControl fullWidth variant="outlined" margin="normal" size="small">
             <InputLabel id="mandal-select-label">મંડળ</InputLabel>
@@ -140,7 +158,7 @@ function AddSamparkSevakModal({ modal, setModal }) {
             onClick={handleSubmit}
             disabled={loader}
           >
-            {loader ? <CircularProgress size={24} /> : "Add"}
+            {loader ? <CircularProgress size={24} /> : "Update"}
           </Button>
           <Button
             color="error"
@@ -160,4 +178,4 @@ function AddSamparkSevakModal({ modal, setModal }) {
   );
 }
 
-export default AddSamparkSevakModal;
+export default EditMemberModal;

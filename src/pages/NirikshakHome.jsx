@@ -10,7 +10,7 @@ const NirikshakHome = () => {
   return (
     <>
       <Header />
-      <h4 style={{ margin: "22px" }}>Teams under your supervision</h4>
+      <h4 style={{ margin: "22px" }}>Teams under your supervision (Nirikshak)</h4>
       <SupervisorTeams />
     </>
   );

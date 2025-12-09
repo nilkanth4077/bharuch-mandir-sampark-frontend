@@ -24,7 +24,7 @@ function EditMemberModal({ modal, setModal }) {
     name: "",
     phone: "",
     mandal: "",
-    // address: "",
+    target: "",
   });
   const toggle = () => setModal(!modal);
 
@@ -41,7 +41,7 @@ function EditMemberModal({ modal, setModal }) {
     if (!formData.mandal) errs.mandal = "મંડળ પસંદ કરો";
     if (!formData.name) errs.name = "સંપૂર્ણ નામ લખો";
     if (!formData.phone) errs.phone = "ફોન નંબર લખો";
-    // if (!formData.address) errs.address = "સરનામું લખો";
+    if (!formData.target) errs.target = "ટાર્ગેટ લખો";
 
     return errs;
   };
@@ -62,7 +62,7 @@ function EditMemberModal({ modal, setModal }) {
         name: formData.name,
         phone: formData.phone,
         mandal: formData.mandal,
-        // address: formData.address,
+        target: formData.target,
         sevak_id: mySevakCode,
       };
       alert("Updated details: " + JSON.stringify(payload));
@@ -110,20 +110,20 @@ function EditMemberModal({ modal, setModal }) {
             />
           </FormControl>
 
-          {/* <FormControl fullWidth variant="outlined" margin="normal">
+          <FormControl fullWidth variant="outlined" margin="normal">
             <TextField
-              label="સરનામું"
-              name="address"
-              type="text"
-              value={formData.address}
+              label="Target"
+              name="target"
+              type="number"
+              value={formData.target}
               onChange={handleChange}
               variant="outlined"
               color="secondary"
-              error={!!errors.address}
-              helperText={errors.address}
+              error={!!errors.target}
+              helperText={errors.target}
               fullWidth
             />
-          </FormControl> */}
+          </FormControl>
 
           <FormControl fullWidth variant="outlined" margin="normal" size="small">
             <InputLabel id="mandal-select-label">મંડળ</InputLabel>

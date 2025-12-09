@@ -51,11 +51,11 @@ function Header(props) {
           <Nav className="me-auto" navbar>
             {(role === "Sanchalak") && (
               <>
-                <NavItem style={{ margin: "5px" }}>
+                {/* <NavItem style={{ margin: "5px" }}>
                   <Button color="warning" onClick={handleManageSSDetails}>
                     Manage Sampark Sevak
                   </Button>
-                </NavItem>
+                </NavItem> */}
               </>
             )}
             {role === "Admin" && (

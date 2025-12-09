@@ -5,6 +5,7 @@ import LeaderTeams from '../components/SupervisorTeams';
 import CreateTeamModal from '../components/CreateTeamModal';
 import AddSamparkSevakModal from '../components/AddSamparkSevakModal';
 import { Grid, Paper, Typography } from '@mui/material';
+import SupervisorMandals from '../components/SupervisorMandals';
 
 const SupervisorHome = () => {
   const [showAddMember, setShowAddMember] = useState(false);
@@ -85,7 +86,8 @@ const SupervisorHome = () => {
       </div>
 
       <div>
-        <LeaderTeams />
+        {/* <LeaderTeams /> */}
+        <SupervisorMandals />
       </div>
 
       {showAddMember && (

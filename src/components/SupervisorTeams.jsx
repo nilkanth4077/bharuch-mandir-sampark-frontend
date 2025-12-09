@@ -18,17 +18,18 @@ export default function SupervisorTeams() {
                 id: 1,
                 teamName: "Team A",
                 members: [
-                    { id: 101, name: "Amit", phone: "9999999999", address: "XYZ", mandal: "SJ" },
-                    { id: 102, name: "Rahul", phone: "8888888888", address: "XYZ", mandal: "NK" },
-                    { id: 103, name: "Kirtan", phone: "7777777777", address: "XYZ", mandal: "SRB" }
+                    { id: 1, sevak_id: "AK01", name: "Harsh", mandal_name: "Akshardham", filled_form: 10, sevak_target: 15, phone_number: "9999999999" },
+                    { id: 2, sevak_id: "AK02", name: "Nirav", mandal_name: "Akshardham", filled_form: 12, sevak_target: 15, phone_number: "8888888888" },
+                    { id: 3, sevak_id: "AK03", name: "Kunal", mandal_name: "Akshardham", filled_form: 9, sevak_target: 10, phone_number: "7777777777" }
                 ]
             },
             {
                 id: 2,
                 teamName: "Team B",
                 members: [
-                    { id: 201, name: "Vraj", phone: "9992221110", address: "XYZ", mandal: "NK" },
-                    { id: 202, name: "Dev", phone: "9090909090", address: "XYZ", mandal: "SRB" }
+                    { id: 1, sevak_id: "AK01", name: "Harsh", mandal_name: "Akshardham", filled_form: 10, sevak_target: 15, phone_number: "9999999999" },
+                    { id: 2, sevak_id: "AK02", name: "Nirav", mandal_name: "Akshardham", filled_form: 12, sevak_target: 15, phone_number: "8888888888" },
+                    { id: 3, sevak_id: "AK03", name: "Kunal", mandal_name: "Akshardham", filled_form: 9, sevak_target: 10, phone_number: "7777777777" }
                 ]
             }
         ]
@@ -45,10 +46,6 @@ export default function SupervisorTeams() {
     return (
         <>
             <div style={{ width: "90%", margin: "auto", marginTop: "30px" }}>
-
-                <h2 style={{ marginBottom: "20px" }}>
-                    Teams You Lead
-                </h2>
 
                 {leaderData.teams.map(team => (
                     <div
@@ -89,10 +86,12 @@ export default function SupervisorTeams() {
                                 >
                                     <thead>
                                         <tr style={{ background: "#f5f5f5" }}>
+                                            <th style={th}>Id</th>
                                             <th style={th}>Name</th>
                                             <th style={th}>Phone</th>
                                             <th style={th}>Mandal</th>
-                                            <th style={th}>Address</th>
+                                            <th style={th}>Form Filled</th>
+                                            <th style={th}>Target</th>
                                             <th style={th}>Actions</th>
                                         </tr>
                                     </thead>
@@ -100,10 +99,12 @@ export default function SupervisorTeams() {
                                     <tbody>
                                         {team.members.map(m => (
                                             <tr key={m.id}>
+                                                <td style={td}>{m.sevak_id}</td>
                                                 <td style={td}>{m.name}</td>
-                                                <td style={td}>{m.phone}</td>
-                                                <td style={td}>{m.mandal}</td>
-                                                <td style={td}>{m.address}</td>
+                                                <td style={td}>{m.phone_number}</td>
+                                                <td style={td}>{m.mandal_name}</td>
+                                                <td style={td}>{m.filled_form}</td>
+                                                <td style={td}>{m.sevak_target}</td>
                                                 <td style={{ border: "1px solid #ddd", padding: "10px", textAlign: "center", whiteSpace: "nowrap" }}>
                                                     <FaEdit
                                                         style={{

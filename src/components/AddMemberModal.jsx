@@ -24,6 +24,7 @@ function AddMemberModal({ modal, setModal }) {
     name: "",
     phone: "",
     mandal: "",
+    address: "",
   });
   const toggle = () => setModal(!modal);
 
@@ -40,6 +41,7 @@ function AddMemberModal({ modal, setModal }) {
     if (!formData.mandal) errs.mandal = "મંડળ પસંદ કરો";
     if (!formData.name) errs.name = "સંપૂર્ણ નામ લખો";
     if (!formData.phone) errs.phone = "ફોન નંબર લખો";
+    if (!formData.address) errs.address = "સરનામું લખો";
 
     return errs;
   };
@@ -60,6 +62,7 @@ function AddMemberModal({ modal, setModal }) {
         name: formData.name,
         phone: formData.phone,
         mandal: formData.mandal,
+        address: formData.address,
         sevak_id: mySevakCode,
       };
       alert("Work in progress: " + JSON.stringify(payload));
@@ -104,6 +107,21 @@ function AddMemberModal({ modal, setModal }) {
               helperText={errors.phone}
               fullWidth
               inputProps={{ inputMode: "numeric", pattern: "[0-9]{10}", maxLength: 10 }}
+            />
+          </FormControl>
+
+          <FormControl fullWidth variant="outlined" margin="normal">
+            <TextField
+              label="સરનામું"
+              name="address"
+              type="text"
+              value={formData.address}
+              onChange={handleChange}
+              variant="outlined"
+              color="secondary"
+              error={!!errors.address}
+              helperText={errors.address}
+              fullWidth
             />
           </FormControl>
 

@@ -97,7 +97,7 @@ export default function SupervisorTeams() {
                                             <th style={th}>Mandal</th>
                                             <th style={th}>Form Filled</th>
                                             <th style={th}>Target</th>
-                                            {isAdmin || isSanchalak ? <th style={th}>Actions</th> : null}
+                                            {(isAdmin || isSanchalak) ? <th style={th}>Actions</th> : null}
                                         </tr>
                                     </thead>
 
@@ -110,7 +110,7 @@ export default function SupervisorTeams() {
                                                 <td style={td}>{m.mandal_name}</td>
                                                 <td style={td}>{m.filled_form}</td>
                                                 <td style={td}>{m.sevak_target}</td>
-                                                {isAdmin || isSanchalak && (
+                                                {(isAdmin || isSanchalak) && (
                                                     <td style={{ border: "1px solid #ddd", padding: "10px", textAlign: "center", whiteSpace: "nowrap" }}>
                                                         <FaEdit
                                                             style={{

@@ -104,8 +104,8 @@ export default function SupervisorMandals() {
 
                                                     <Box mt={1} display="flex" flexDirection="column" alignItems="center" gap={1}>
                                                         <Chip label={"Sanchalak: " + m.sanchalak_name} size="small" />
-                                                        <Chip label={"Target: " + m.mandal_target} size="small" />
-                                                        <Chip label={"Filled: " + m.mandal_filled_form} size="small" />
+                                                        <Chip label={"Teams: " + m.mandal_target} size="small" />
+                                                        <Chip label={"Sevak: " + m.mandal_filled_form} size="small" />
                                                     </Box>
                                                 </CardContent>
                                             </Card>

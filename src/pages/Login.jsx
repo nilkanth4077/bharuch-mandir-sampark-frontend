@@ -66,17 +66,25 @@ const Login = () => {
         achieved_target: 15
       },
       {
-        sevak_id: "sanchalak",
-        password: "sanchalak@123",
-        role: "Sanchalak",
+        sevak_id: "nirdeshak",
+        password: "nirdeshak@123",
+        role: "Nirdeshak",
         sevak_target: 100,
         filled_form: 20,
         achieved_target: 15
       },
       {
-        sevak_id: "nirdeshak",
-        password: "nirdeshak@123",
-        role: "Nirdeshak",
+        sevak_id: "nirikshak",
+        password: "nirikshak@123",
+        role: "Nirikshak",
+        sevak_target: 100,
+        filled_form: 20,
+        achieved_target: 15
+      },
+      {
+        sevak_id: "sanchalak",
+        password: "sanchalak@123",
+        role: "Sanchalak",
         sevak_target: 100,
         filled_form: 20,
         achieved_target: 15
@@ -107,8 +115,12 @@ const Login = () => {
       // redirect based on role
       if (foundUser.role === "Admin") {
         navigate("/admin-home");
-      } else if (foundUser.role === "Sanchalak" || foundUser.role === "Nirdeshak" || foundUser.role === "Nirikshak") {
-        navigate("/supervisor-home");
+      } else if (foundUser.role === "Nirdeshak") {
+        navigate("/nirdeshak-home");
+      } else if (foundUser.role === "Nirikshak") {
+        navigate("/nirikshak-home");
+      } else if (foundUser.role === "Sanchalak") {
+        navigate("/sanchalak-home");
       } else {
         navigate("/team-home");
       }

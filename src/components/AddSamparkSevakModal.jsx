@@ -24,6 +24,7 @@ function AddSamparkSevakModal({ modal, setModal }) {
     name: "",
     phone: "",
     mandal: "",
+    target: "",
   });
   const toggle = () => setModal(!modal);
 
@@ -40,6 +41,7 @@ function AddSamparkSevakModal({ modal, setModal }) {
     if (!formData.mandal) errs.mandal = "મંડળ પસંદ કરો";
     if (!formData.name) errs.name = "સંપૂર્ણ નામ લખો";
     if (!formData.phone) errs.phone = "ફોન નંબર લખો";
+    if (!formData.target) errs.target = "ટાર્ગેટ લખો";
 
     return errs;
   };
@@ -60,6 +62,7 @@ function AddSamparkSevakModal({ modal, setModal }) {
         name: formData.name,
         phone: formData.phone,
         mandal: formData.mandal,
+        target: formData.target,
         sevak_id: mySevakCode,
       };
       alert("Work in progress: " + JSON.stringify(payload));
@@ -104,6 +107,21 @@ function AddSamparkSevakModal({ modal, setModal }) {
               helperText={errors.phone}
               fullWidth
               inputProps={{ inputMode: "numeric", pattern: "[0-9]{10}", maxLength: 10 }}
+            />
+          </FormControl>
+
+          <FormControl fullWidth variant="outlined" margin="normal">
+            <TextField
+              label="Target"
+              name="target"
+              type="number"
+              value={formData.target}
+              onChange={handleChange}
+              variant="outlined"
+              color="secondary"
+              error={!!errors.target}
+              helperText={errors.target}
+              fullWidth
             />
           </FormControl>
 

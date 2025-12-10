@@ -91,13 +91,13 @@ const TeamHome = () => {
           </Button>
         </div>
 
-        <Box display="flex" justifyContent="flex-start" mb={2} ml={1}>
+        <Box mb={2} mx={1}>
           <TextField
+            fullWidth
             size="small"
-            placeholder="Search mandals…"
+            placeholder="Search here..."
             value={qMandal}
             onChange={(e) => setQMandal(e.target.value)}
-            sx={{ width: 360 }}
           />
         </Box>
 

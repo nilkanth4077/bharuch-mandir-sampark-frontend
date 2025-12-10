@@ -8,31 +8,25 @@ import FormControl from "@mui/material/FormControl";
 import CircularProgress from "@mui/material/CircularProgress";
 import {
   Button,
-  Checkbox,
   InputLabel,
-  ListItemText,
   MenuItem,
   Select,
 } from "@mui/material";
-import mandalYuvaks from "../api/data";
 
-function CreateTeamModal({ modal, setModal }) {
+function EditSamparkYuvakModal({ modal, setModal }) {
 
   const me = JSON.parse(localStorage.getItem("sevakDetails")) || {};
+  const mySevakCode = me?.sevak_code || me?.sevak_id || "";
 
   const [loader, setLoader] = useState(false);
   const [errors, setErrors] = useState({});
-  const [yuvaks, setYuvaks] = useState([]);
   const [formData, setFormData] = useState({
     name: "",
-    target: "",
-    yuvaks: []
+    phone: "",
+    dob: "",
+    address: "",
   });
   const toggle = () => setModal(!modal);
-
-  useEffect(() => {
-    setYuvaks(mandalYuvaks.filter((x) => x.team === "Not Assigned"));
-  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -44,9 +38,10 @@ function CreateTeamModal({ modal, setModal }) {
 
   const validateForm = () => {
     const errs = {};
-    if (!formData.name) errs.name = "Enter team name";
-    if (!formData.target) errs.target = "Enter target";
-    if (formData.yuvaks.length === 0) errs.yuvaks = "Select at least one yuvak";
+    if (!formData.dob) errs.dob = "Enter Date of Birth";
+    if (!formData.name) errs.name = "Enter Name";
+    if (!formData.phone) errs.phone = "Enter Phone No";
+    if (!formData.address) errs.address = "Enter Address";
 
     return errs;
   };
@@ -65,10 +60,12 @@ function CreateTeamModal({ modal, setModal }) {
     try {
       const payload = {
         name: formData.name,
-        target: formData.target,
-        yuvaks: formData.yuvaks
+        phone: formData.phone,
+        dob: formData.dob,
+        address: formData.address,
+        sevak_id: mySevakCode,
       };
-      alert("Work in progress: " + JSON.stringify(payload));
+      alert("New member added: " + JSON.stringify(payload));
     } catch (error) {
       toast.error("An error occurred: " + error.message);
     } finally {
@@ -80,11 +77,11 @@ function CreateTeamModal({ modal, setModal }) {
   return (
     <div>
       <Modal isOpen={modal} toggle={toggle} fade={false}>
-        <ModalHeader toggle={toggle}>Create Team</ModalHeader>
+        <ModalHeader toggle={toggle}>Edit Sampark Details</ModalHeader>
         <ModalBody>
           <FormControl fullWidth variant="outlined" margin="normal">
             <TextField
-              label="Team Name"
+              label="Name"
               name="name"
               type="text"
               value={formData.name}
@@ -99,43 +96,75 @@ function CreateTeamModal({ modal, setModal }) {
 
           <FormControl fullWidth variant="outlined" margin="normal">
             <TextField
-              label="Target"
-              name="target"
-              type="number"
-              value={formData.target}
+              label="Phone No"
+              name="phone"
+              type="tel"
+              value={formData.phone || ""}
               onChange={handleChange}
               variant="outlined"
               color="secondary"
-              error={!!errors.target}
-              helperText={errors.target}
+              error={Boolean(errors.phone)}
+              helperText={errors.phone}
+              fullWidth
+              inputProps={{ inputMode: "numeric", pattern: "[0-9]{10}", maxLength: 10 }}
+            />
+          </FormControl>
+
+          <FormControl fullWidth variant="outlined" margin="normal">
+            <TextField
+              label="Date of Birth"
+              name="dob"
+              type="date"
+              value={formData.dob}
+              onChange={handleChange}
+              variant="outlined"
+              color="secondary"
+              InputLabelProps={{ shrink: true }}   // Ensures label doesn't overlap
+              error={!!errors.dob}
+              helperText={errors.dob}
               fullWidth
             />
           </FormControl>
 
-          <FormControl fullWidth margin="normal" error={!!errors.yuvaks}>
-            <InputLabel>Select Yuvaks</InputLabel>
-
-            <Select
-              multiple
-              name="yuvaks"
-              value={formData.yuvaks}
+          <FormControl fullWidth variant="outlined" margin="normal">
+            <TextField
+              label="Address"
+              name="address"
+              type="text"
+              value={formData.address}
               onChange={handleChange}
-              label="Select Yuvaks"
-              renderValue={(selected) =>
-                selected.map(id => yuvaks.find(x => x.id === id)?.name).join(", ")
-              }
-            >
-              {yuvaks.map((y) => (
-                <MenuItem key={y.id} value={y.id}>
-                  <Checkbox checked={formData.yuvaks.includes(y.id)} />
-                  <ListItemText primary={`${y.name} (${y.phone})`} />
-                </MenuItem>
-              ))}
-            </Select>
-
-            <small style={{ color: "red" }}>{errors.yuvaks}</small>
+              variant="outlined"
+              color="secondary"
+              error={!!errors.address}
+              helperText={errors.address}
+              fullWidth
+            />
           </FormControl>
 
+          {/* <FormControl fullWidth variant="outlined" margin="normal" size="small">
+            <InputLabel id="mandal-select-label">મંડળ</InputLabel>
+            <Select
+              labelId="mandal-select-label"
+              label="મંડળ"
+              name="mandal"
+              value={formData.mandal}
+              onChange={handleChange}
+              error={!!errors.mandal}
+            >
+              <MenuItem key="SJ" value="SJ">
+                સહજાનંદ (SJ)
+              </MenuItem>
+              <MenuItem key="NK" value="NK">
+                નારાયણકુંજ (NK)
+              </MenuItem>
+              <MenuItem key="SRB" value="SRB">
+                સુરભિ (SRB)
+              </MenuItem>
+            </Select>
+            {errors.mandal && (
+              <div style={{ color: "#d32f2f", fontSize: 12, marginTop: 4 }}>{errors.mandal}</div>
+            )}
+          </FormControl> */}
         </ModalBody>
 
         <ModalFooter>
@@ -145,7 +174,7 @@ function CreateTeamModal({ modal, setModal }) {
             onClick={handleSubmit}
             disabled={loader}
           >
-            {loader ? <CircularProgress size={24} /> : "Add"}
+            {loader ? <CircularProgress size={24} /> : "Update"}
           </Button>
           <Button
             color="error"
@@ -165,4 +194,4 @@ function CreateTeamModal({ modal, setModal }) {
   );
 }
 
-export default CreateTeamModal;
+export default EditSamparkYuvakModal;

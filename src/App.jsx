@@ -18,6 +18,9 @@ import ManageSupervisors from "./pages/ManageSupervisors";
 import NirdeshakHome from "./pages/NirdeshakHome";
 import NirikshakHome from "./pages/NirikshakHome";
 import SanchalakHome from "./pages/SanchalakHome";
+import ManageMandalTeams from "./pages/ManageMandalTeams";
+import ManageMandalYuvaks from "./pages/ManageMandalYuvaks";
+import SamparkYuvakDetailsTeamWise from "./pages/SamparkYuvakDetailsTeamWise";
 
 function App() {
   return (
@@ -40,6 +43,9 @@ function App() {
           <Route path="/manage-sampark-sevak-details" element={<ManageSamparSevakkDetails />} />
           <Route path="/manage-teams" element={<ManageTeams />} />
           <Route path="/manage-supervisor" element={<ManageSupervisors />} />
+          <Route path="/manage-mandal-teams" element={<ManageMandalTeams />} />
+          <Route path="/manage-mandal-yuvaks" element={<ManageMandalYuvaks />} />
+          <Route path="/sampark-yuvak-team-wise" element={<SamparkYuvakDetailsTeamWise />} />
         </Routes>
       </Router>
     </div>

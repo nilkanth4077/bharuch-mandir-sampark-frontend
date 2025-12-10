@@ -44,7 +44,7 @@ function EditTeamModal({ modal, setModal }) {
 
   const validateForm = () => {
     const errs = {};
-    if (!formData.name) errs.name = "Enter team name";
+    // if (!formData.name) errs.name = "Enter team name";
     if (!formData.target) errs.target = "Enter target";
     // if (formData.yuvaks.length === 0) errs.yuvaks = "Select at least one yuvak";
 
@@ -64,7 +64,7 @@ function EditTeamModal({ modal, setModal }) {
 
     try {
       const payload = {
-        name: formData.name,
+        name: formData.name || "",
         target: formData.target,
         // yuvaks: formData.yuvaks
       };
@@ -84,15 +84,9 @@ function EditTeamModal({ modal, setModal }) {
         <ModalBody>
           <FormControl fullWidth variant="outlined" margin="normal">
             <TextField
-              label="Team Name"
-              name="name"
-              type="text"
+              label="Team A (Readonly)"
               value={formData.name}
-              onChange={handleChange}
-              variant="outlined"
-              color="secondary"
-              error={!!errors.name}
-              helperText={errors.name}
+              disabled
               fullWidth
             />
           </FormControl>

@@ -35,6 +35,16 @@ export default function SamparkYuvakDetailsTeamWise() {
     return (
         <>
             <Header />
+            <div style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                paddingTop: '20px',
+                marginInline: '15px'
+            }}>
+                <h5 style={{ margin: 0, whiteSpace: "nowrap", marginLeft: "10px" }} >Sampark Yuvak Details</h5>
+            </div>
+
             <div style={{ width: "90%", margin: "auto", marginTop: "30px" }}>
 
                 {teamSamparkData.teams.map(team => (

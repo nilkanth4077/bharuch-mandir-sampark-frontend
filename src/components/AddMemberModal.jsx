@@ -23,7 +23,7 @@ function AddMemberModal({ modal, setModal }) {
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
-    mandal: "",
+    dob: "",
     address: "",
   });
   const toggle = () => setModal(!modal);
@@ -38,10 +38,10 @@ function AddMemberModal({ modal, setModal }) {
 
   const validateForm = () => {
     const errs = {};
-    if (!formData.mandal) errs.mandal = "મંડળ પસંદ કરો";
-    if (!formData.name) errs.name = "સંપૂર્ણ નામ લખો";
-    if (!formData.phone) errs.phone = "ફોન નંબર લખો";
-    if (!formData.address) errs.address = "સરનામું લખો";
+    if (!formData.dob) errs.dob = "Enter Date of Birth";
+    if (!formData.name) errs.name = "Enter Name";
+    if (!formData.phone) errs.phone = "Enter Phone No";
+    if (!formData.address) errs.address = "Enter Address";
 
     return errs;
   };
@@ -61,7 +61,7 @@ function AddMemberModal({ modal, setModal }) {
       const payload = {
         name: formData.name,
         phone: formData.phone,
-        mandal: formData.mandal,
+        dob: formData.dob,
         address: formData.address,
         sevak_id: mySevakCode,
       };
@@ -77,11 +77,11 @@ function AddMemberModal({ modal, setModal }) {
   return (
     <div>
       <Modal isOpen={modal} toggle={toggle} fade={false}>
-        <ModalHeader toggle={toggle}>Add Member</ModalHeader>
+        <ModalHeader toggle={toggle}>Add Sampark Details</ModalHeader>
         <ModalBody>
           <FormControl fullWidth variant="outlined" margin="normal">
             <TextField
-              label="નામ"
+              label="Name"
               name="name"
               type="text"
               value={formData.name}
@@ -96,7 +96,7 @@ function AddMemberModal({ modal, setModal }) {
 
           <FormControl fullWidth variant="outlined" margin="normal">
             <TextField
-              label="ફોન નંબર"
+              label="Phone No"
               name="phone"
               type="tel"
               value={formData.phone || ""}
@@ -112,7 +112,23 @@ function AddMemberModal({ modal, setModal }) {
 
           <FormControl fullWidth variant="outlined" margin="normal">
             <TextField
-              label="સરનામું"
+              label="Date of Birth"
+              name="dob"
+              type="date"
+              value={formData.dob}
+              onChange={handleChange}
+              variant="outlined"
+              color="secondary"
+              InputLabelProps={{ shrink: true }}   // Ensures label doesn't overlap
+              error={!!errors.dob}
+              helperText={errors.dob}
+              fullWidth
+            />
+          </FormControl>
+
+          <FormControl fullWidth variant="outlined" margin="normal">
+            <TextField
+              label="Address"
               name="address"
               type="text"
               value={formData.address}
@@ -125,7 +141,7 @@ function AddMemberModal({ modal, setModal }) {
             />
           </FormControl>
 
-          <FormControl fullWidth variant="outlined" margin="normal" size="small">
+          {/* <FormControl fullWidth variant="outlined" margin="normal" size="small">
             <InputLabel id="mandal-select-label">મંડળ</InputLabel>
             <Select
               labelId="mandal-select-label"
@@ -148,7 +164,7 @@ function AddMemberModal({ modal, setModal }) {
             {errors.mandal && (
               <div style={{ color: "#d32f2f", fontSize: 12, marginTop: 4 }}>{errors.mandal}</div>
             )}
-          </FormControl>
+          </FormControl> */}
         </ModalBody>
 
         <ModalFooter>

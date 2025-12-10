@@ -42,22 +42,21 @@ function Header(props) {
   const role = sevakDetails.role;
   console.log(role, 'role');
 
-  const roleRoutes = {
-    Admin: "/admin-home",
-    Nirdeshak: "/nirdeshak-home",
-    Nirikshak: "/nirikshak-home",
-    Sanchalak: "/sanchalak-home",
-    Team: "/team-home",
+  const handleRedirection = () => {
+    if (role === "Admin") navigate("/admin-home");
+    else if (role === "Nirdeshak") navigate("/nirdeshak-home");
+    else if (role === "Nirikshak") navigate("/nirikshak-home");
+    else if (role === "Sanchalak") navigate("/sanchalak-home");
+    else if (role === "Team") navigate("/team-home");
+    else navigate("/");
   };
-
-  const redirectUrl = roleRoutes[role] || "/team-home";
 
   return (
     <div>
       <Navbar
         style={{ background: "#ED3237", marginBottom: "7px", zIndex: 1000 }}
       >
-        <NavbarBrand style={{ color: "#ffffffff" }} href={redirectUrl}>
+        <NavbarBrand style={{ color: "#ffffffff" }} onClick={handleRedirection}>
           <i className="bi bi-house-door-fill"></i>
           <span style={{ margin: "10px" }}>Sampark 2025</span>
         </NavbarBrand>

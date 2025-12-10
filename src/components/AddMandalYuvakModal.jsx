@@ -4,28 +4,30 @@ import { BACKEND_ENDPOINT } from "../api/api";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import TextField from "@mui/material/TextField";
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
 import FormControl from "@mui/material/FormControl";
+import FormLabel from "@mui/material/FormLabel";
 import CircularProgress from "@mui/material/CircularProgress";
 import {
   Button,
+  FormControlLabel,
   InputLabel,
   MenuItem,
   Select,
 } from "@mui/material";
 
-function EditMemberModal({ modal, setModal }) {
-
+function AddMandalYuvakModal({ modal, setModal }) {
   const me = JSON.parse(localStorage.getItem("sevakDetails")) || {};
   const mySevakCode = me?.sevak_code || me?.sevak_id || "";
 
   const [loader, setLoader] = useState(false);
-  const [errors, setErrors] = useState({});
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
-    mandal: "",
-    target: "",
   });
+  const [errors, setErrors] = useState({});
+
   const toggle = () => setModal(!modal);
 
   const handleChange = (e) => {
@@ -38,10 +40,8 @@ function EditMemberModal({ modal, setModal }) {
 
   const validateForm = () => {
     const errs = {};
-    if (!formData.mandal) errs.mandal = "મંડળ પસંદ કરો";
-    if (!formData.name) errs.name = "સંપૂર્ણ નામ લખો";
-    if (!formData.phone) errs.phone = "ફોન નંબર લખો";
-    if (!formData.target) errs.target = "ટાર્ગેટ લખો";
+    if (!formData.name) errs.name = "Enter name";
+    if (!formData.phone) errs.phone = "Enter phone number";
 
     return errs;
   };
@@ -61,13 +61,14 @@ function EditMemberModal({ modal, setModal }) {
       const payload = {
         name: formData.name,
         phone: formData.phone,
-        mandal: formData.mandal,
-        target: formData.target,
         sevak_id: mySevakCode,
       };
-      alert("Updated details: " + JSON.stringify(payload));
+
+      alert("Work in progress: " + JSON.stringify(payload));
+
     } catch (error) {
-      toast.error("An error occurred: " + error.message);
+      console.error("add_supervisor error:", error);
+      toast.error(error || "An error occurred");
     } finally {
       setLoader(false);
       toggle();
@@ -76,12 +77,12 @@ function EditMemberModal({ modal, setModal }) {
 
   return (
     <div>
-      <Modal isOpen={modal} toggle={toggle} fade={false}>
-        <ModalHeader toggle={toggle}>Edit Member</ModalHeader>
+      <Modal isOpen={modal} toggle={toggle}>
+        <ModalHeader toggle={toggle}>Add Mandal Yuvak</ModalHeader>
         <ModalBody>
           <FormControl fullWidth variant="outlined" margin="normal">
             <TextField
-              label="નામ"
+              label="Name"
               name="name"
               type="text"
               value={formData.name}
@@ -96,7 +97,7 @@ function EditMemberModal({ modal, setModal }) {
 
           <FormControl fullWidth variant="outlined" margin="normal">
             <TextField
-              label="ફોન નંબર"
+              label="Phone No"
               name="phone"
               type="tel"
               value={formData.phone || ""}
@@ -110,45 +111,6 @@ function EditMemberModal({ modal, setModal }) {
             />
           </FormControl>
 
-          <FormControl fullWidth variant="outlined" margin="normal">
-            <TextField
-              label="Target"
-              name="target"
-              type="number"
-              value={formData.target}
-              onChange={handleChange}
-              variant="outlined"
-              color="secondary"
-              error={!!errors.target}
-              helperText={errors.target}
-              fullWidth
-            />
-          </FormControl>
-
-          <FormControl fullWidth variant="outlined" margin="normal" size="small">
-            <InputLabel id="mandal-select-label">મંડળ</InputLabel>
-            <Select
-              labelId="mandal-select-label"
-              label="મંડળ"
-              name="mandal"
-              value={formData.mandal}
-              onChange={handleChange}
-              error={!!errors.mandal}
-            >
-              <MenuItem key="SJ" value="SJ">
-                સહજાનંદ (SJ)
-              </MenuItem>
-              <MenuItem key="NK" value="NK">
-                નારાયણકુંજ (NK)
-              </MenuItem>
-              <MenuItem key="SRB" value="SRB">
-                સુરભિ (SRB)
-              </MenuItem>
-            </Select>
-            {errors.mandal && (
-              <div style={{ color: "#d32f2f", fontSize: 12, marginTop: 4 }}>{errors.mandal}</div>
-            )}
-          </FormControl>
         </ModalBody>
 
         <ModalFooter>
@@ -158,7 +120,7 @@ function EditMemberModal({ modal, setModal }) {
             onClick={handleSubmit}
             disabled={loader}
           >
-            {loader ? <CircularProgress size={24} /> : "Update"}
+            {loader ? <CircularProgress size={24} /> : "Add"}
           </Button>
           <Button
             color="error"
@@ -172,10 +134,9 @@ function EditMemberModal({ modal, setModal }) {
         </ModalFooter>
       </Modal>
 
-      {/* keep if you don’t already have a global container */}
       <ToastContainer position="top-center" autoClose={5000} pauseOnHover theme="colored" />
     </div>
   );
 }
 
-export default EditMemberModal;
+export default AddMandalYuvakModal;

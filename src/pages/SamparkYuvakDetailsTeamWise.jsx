@@ -1,14 +1,14 @@
-import React, { useState } from "react";
-import { FaEdit, FaPencilAlt, FaTrash } from "react-icons/fa";
-import EditMemberModal from "./EditMandalYuvakModal";
-import { teamMandalData } from "../api/data";
-import EditMandalYuvakModal from "./EditMandalYuvakModal";
-import EditTeamModal from "./EditTeamModal";
+import React, { useState } from 'react'
+import { FaEdit, FaTrash } from "react-icons/fa";
+import EditMemberModal from "../components/EditMandalYuvakModal";
+import { teamMandalData, teamSamparkData } from "../api/data";
+import EditMandalYuvakModal from "../components/EditMandalYuvakModal";
+import Header from '../components/Header';
+import EditSamparkYuvakModal from '../components/EditSamparkYuvakModal';
 
-export default function SupervisorTeams() {
+export default function SamparkYuvakDetailsTeamWise() {
     const [openTeam, setOpenTeam] = useState(null);
     const [showEditMember, setShowEditMember] = useState(false);
-    const [showEditTeam, setShowEditTeam] = useState(false);
 
     const sevakDetails = JSON.parse(localStorage.getItem("sevakDetails"));
     const role = sevakDetails.role;
@@ -19,7 +19,6 @@ export default function SupervisorTeams() {
     const handleDeleteMember = () => {
         alert("Sure want to remove member from this team ?");
     };
-    const handleEditTeam = () => setShowEditTeam(true);
 
     const toggleOpen = (teamId) => {
         setOpenTeam(openTeam === teamId ? null : teamId);
@@ -35,9 +34,10 @@ export default function SupervisorTeams() {
 
     return (
         <>
+            <Header />
             <div style={{ width: "90%", margin: "auto", marginTop: "30px" }}>
 
-                {teamMandalData.teams.map(team => (
+                {teamSamparkData.teams.map(team => (
                     <div
                         key={team.id}
                         style={{
@@ -60,20 +60,7 @@ export default function SupervisorTeams() {
                                 fontSize: "17px"
                             }}
                         >
-                            <span>
-                                <b>{team.teamName}</b>
-                                {" "}
-                                ({team.filled_forms}/{team.target})
-                                <FaPencilAlt
-                                    style={{
-                                        cursor: "pointer",
-                                        marginLeft: "8px"
-                                    }}
-                                    size={18}
-                                    color="green"
-                                    onClick={handleEditTeam}
-                                />
-                            </span>
+                            {team.teamName}
                             <span>{openTeam === team.id ? "▲" : "▼"}</span>
                         </div>
 
@@ -90,8 +77,10 @@ export default function SupervisorTeams() {
                                     <thead>
                                         <tr style={{ background: "#f5f5f5" }}>
                                             <th style={th}>Id</th>
-                                            <th style={th}>Mandal Yuvak Name</th>
+                                            <th style={th}>Sampark Yuvak Name</th>
                                             <th style={th}>Phone</th>
+                                            <th style={th}>DOB</th>
+                                            <th style={th}>Address</th>
                                             {(isAdmin || isSanchalak) ? <th style={th}>Actions</th> : null}
                                         </tr>
                                     </thead>
@@ -99,9 +88,11 @@ export default function SupervisorTeams() {
                                     <tbody>
                                         {team.members.map(m => (
                                             <tr key={m.id}>
-                                                <td style={td}>{m.sevak_id}</td>
+                                                <td style={td}>{m.id}</td>
                                                 <td style={td}>{m.name}</td>
-                                                <td style={td}>{m.phone_number}</td>
+                                                <td style={td}>{m.phone}</td>
+                                                <td style={td}>{m.dob}</td>
+                                                <td style={td}>{m.address}</td>
                                                 {(isAdmin || isSanchalak) && (
                                                     <td style={{ border: "1px solid #ddd", padding: "10px", textAlign: "center", whiteSpace: "nowrap" }}>
                                                         <FaEdit
@@ -113,15 +104,17 @@ export default function SupervisorTeams() {
                                                             color="green"
                                                             onClick={handleEditMember}
                                                         />
-                                                        <FaTrash
-                                                            style={{
-                                                                cursor: "pointer",
-                                                                marginRight: "15px"
-                                                            }}
-                                                            size={18}
-                                                            color="red"
-                                                            onClick={handleDeleteMember}
-                                                        />
+                                                        {isAdmin && (
+                                                            <FaTrash
+                                                                style={{
+                                                                    cursor: "pointer",
+                                                                    marginRight: "15px"
+                                                                }}
+                                                                size={18}
+                                                                color="red"
+                                                                onClick={handleDeleteMember}
+                                                            />
+                                                        )}
                                                     </td>
                                                 )}
                                             </tr>
@@ -137,14 +130,10 @@ export default function SupervisorTeams() {
             </div>
 
             {showEditMember && (
-                <EditMandalYuvakModal modal={showEditMember} setModal={setShowEditMember} />
-            )}
-
-            {showEditTeam && (
-                <EditTeamModal modal={showEditTeam} setModal={setShowEditTeam} />
+                <EditSamparkYuvakModal modal={showEditMember} setModal={setShowEditMember} />
             )}
         </>
-    );
+    )
 }
 
 const th = {

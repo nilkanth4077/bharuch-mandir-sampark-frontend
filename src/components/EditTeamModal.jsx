@@ -16,7 +16,7 @@ import {
 } from "@mui/material";
 import mandalYuvaks from "../api/data";
 
-function CreateTeamModal({ modal, setModal }) {
+function EditTeamModal({ modal, setModal }) {
 
   const me = JSON.parse(localStorage.getItem("sevakDetails")) || {};
 
@@ -26,7 +26,7 @@ function CreateTeamModal({ modal, setModal }) {
   const [formData, setFormData] = useState({
     name: "",
     target: "",
-    yuvaks: []
+    // yuvaks: []
   });
   const toggle = () => setModal(!modal);
 
@@ -46,7 +46,7 @@ function CreateTeamModal({ modal, setModal }) {
     const errs = {};
     if (!formData.name) errs.name = "Enter team name";
     if (!formData.target) errs.target = "Enter target";
-    if (formData.yuvaks.length === 0) errs.yuvaks = "Select at least one yuvak";
+    // if (formData.yuvaks.length === 0) errs.yuvaks = "Select at least one yuvak";
 
     return errs;
   };
@@ -66,7 +66,7 @@ function CreateTeamModal({ modal, setModal }) {
       const payload = {
         name: formData.name,
         target: formData.target,
-        yuvaks: formData.yuvaks
+        // yuvaks: formData.yuvaks
       };
       alert("Work in progress: " + JSON.stringify(payload));
     } catch (error) {
@@ -80,7 +80,7 @@ function CreateTeamModal({ modal, setModal }) {
   return (
     <div>
       <Modal isOpen={modal} toggle={toggle} fade={false}>
-        <ModalHeader toggle={toggle}>Create Team</ModalHeader>
+        <ModalHeader toggle={toggle}>Edit Team</ModalHeader>
         <ModalBody>
           <FormControl fullWidth variant="outlined" margin="normal">
             <TextField
@@ -112,7 +112,7 @@ function CreateTeamModal({ modal, setModal }) {
             />
           </FormControl>
 
-          <FormControl fullWidth margin="normal" error={!!errors.yuvaks}>
+          {/* <FormControl fullWidth margin="normal" error={!!errors.yuvaks}>
             <InputLabel>Select Yuvaks</InputLabel>
 
             <Select
@@ -134,7 +134,7 @@ function CreateTeamModal({ modal, setModal }) {
             </Select>
 
             <small style={{ color: "red" }}>{errors.yuvaks}</small>
-          </FormControl>
+          </FormControl> */}
 
         </ModalBody>
 
@@ -145,7 +145,7 @@ function CreateTeamModal({ modal, setModal }) {
             onClick={handleSubmit}
             disabled={loader}
           >
-            {loader ? <CircularProgress size={24} /> : "Add"}
+            {loader ? <CircularProgress size={24} /> : "Update"}
           </Button>
           <Button
             color="error"
@@ -165,4 +165,4 @@ function CreateTeamModal({ modal, setModal }) {
   );
 }
 
-export default CreateTeamModal;
+export default EditTeamModal;

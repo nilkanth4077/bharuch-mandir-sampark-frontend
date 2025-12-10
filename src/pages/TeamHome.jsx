@@ -7,11 +7,13 @@ import ListingTable from '../components/ListingTable';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import AddMemberModal from '../components/AddMemberModal';
 import { ProgressBar } from 'react-bootstrap';
+import { Box, Chip, TextField } from '@mui/material';
 
 const TeamHome = () => {
 
   const navigate = useNavigate();
   const [showAddSupervisor, setShowAddSupervisor] = useState(false);
+  const [qMandal, setQMandal] = useState("");
 
   const handleAddSupervisor = () => setShowAddSupervisor(true);
 
@@ -65,6 +67,15 @@ const TeamHome = () => {
         </div>
       </div>
 
+      <Chip
+        label="Team A"
+        sx={{
+          fontSize: "1.2rem",
+          padding: "16px 28px",
+          height: "45px",
+          margin: "20px 12px",
+        }}
+      />
 
       <div>
         <div style={{
@@ -73,20 +84,31 @@ const TeamHome = () => {
           alignItems: 'center',
           margin: '15px 12px',
         }}>
-          <h5 style={{ margin: 0 }}>સંપર્ક થયેલા યુવકોની માહિતી</h5>
+          <h5 style={{ margin: 0 }}>Sampark Details</h5>
 
           <Button color="warning" onClick={handleAddSupervisor}>
-            Add Member
+            Add Sampark Details
           </Button>
         </div>
-        <div style={{ overflowX: "auto", marginTop: "20px" }}>
+
+        <Box display="flex" justifyContent="flex-start" mb={2} ml={1}>
+          <TextField
+            size="small"
+            placeholder="Search mandals…"
+            value={qMandal}
+            onChange={(e) => setQMandal(e.target.value)}
+            sx={{ width: 360 }}
+          />
+        </Box>
+
+        <div style={{ overflowX: "auto", marginTop: "20px", marginInline: "12px" }}>
           <table style={{ width: "100%", borderCollapse: "collapse", minWidth: "600px" }}>
             <thead>
               <tr style={{ backgroundColor: "#f2f2f2" }}>
                 <th style={{ border: "1px solid #ddd", padding: "10px" }}>ID</th>
                 <th style={{ border: "1px solid #ddd", padding: "10px" }}>Name</th>
                 <th style={{ border: "1px solid #ddd", padding: "10px" }}>Address</th>
-                <th style={{ border: "1px solid #ddd", padding: "10px" }}>Mandal</th>
+                <th style={{ border: "1px solid #ddd", padding: "10px" }}>DOB</th>
                 <th style={{ border: "1px solid #ddd", padding: "10px" }}>Phone</th>
               </tr>
             </thead>
@@ -96,7 +118,7 @@ const TeamHome = () => {
                 <td style={{ border: "1px solid #ddd", padding: "10px" }}>1</td>
                 <td style={{ border: "1px solid #ddd", padding: "10px" }}>Ravi Patel</td>
                 <td style={{ border: "1px solid #ddd", padding: "10px" }}>B14 Tulsidham Society 390011</td>
-                <td style={{ border: "1px solid #ddd", padding: "10px" }}>SJ</td>
+                <td style={{ border: "1px solid #ddd", padding: "10px" }}>12-04-2000</td>
                 <td style={{ border: "1px solid #ddd", padding: "10px" }}>9876543210</td>
               </tr>
 
@@ -104,7 +126,7 @@ const TeamHome = () => {
                 <td style={{ border: "1px solid #ddd", padding: "10px" }}>2</td>
                 <td style={{ border: "1px solid #ddd", padding: "10px" }}>Aryan Vyas</td>
                 <td style={{ border: "1px solid #ddd", padding: "10px" }}>A-22 Opp. Jay Ambe School 390011</td>
-                <td style={{ border: "1px solid #ddd", padding: "10px" }}>NK</td>
+                <td style={{ border: "1px solid #ddd", padding: "10px" }}>05-06-1997</td>
                 <td style={{ border: "1px solid #ddd", padding: "10px" }}>8765432109</td>
               </tr>
             </tbody>

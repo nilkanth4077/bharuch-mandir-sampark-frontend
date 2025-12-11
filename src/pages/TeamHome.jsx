@@ -8,6 +8,7 @@ import { FaEdit, FaTrash } from 'react-icons/fa';
 import AddMemberModal from '../components/AddMemberModal';
 import { ProgressBar } from 'react-bootstrap';
 import { Box, Chip, TextField } from '@mui/material';
+import { samparkData } from '../api/data';
 
 const TeamHome = () => {
 
@@ -114,21 +115,15 @@ const TeamHome = () => {
             </thead>
 
             <tbody>
-              <tr>
-                <td style={{ border: "1px solid #ddd", padding: "10px" }}>1</td>
-                <td style={{ border: "1px solid #ddd", padding: "10px" }}>Ravi Patel</td>
-                <td style={{ border: "1px solid #ddd", padding: "10px" }}>B14 Tulsidham Society 390011</td>
-                <td style={{ border: "1px solid #ddd", padding: "10px" }}>12-04-2000</td>
-                <td style={{ border: "1px solid #ddd", padding: "10px" }}>9876543210</td>
-              </tr>
-
-              <tr>
-                <td style={{ border: "1px solid #ddd", padding: "10px" }}>2</td>
-                <td style={{ border: "1px solid #ddd", padding: "10px" }}>Aryan Vyas</td>
-                <td style={{ border: "1px solid #ddd", padding: "10px" }}>A-22 Opp. Jay Ambe School 390011</td>
-                <td style={{ border: "1px solid #ddd", padding: "10px" }}>05-06-1997</td>
-                <td style={{ border: "1px solid #ddd", padding: "10px" }}>8765432109</td>
-              </tr>
+              {samparkData.map((item, index) => (
+                <tr key={index}>
+                  <td style={{ border: "1px solid #ddd", padding: "10px" }}>{item.id}</td>
+                  <td style={{ border: "1px solid #ddd", padding: "10px" }}>{item.name}</td>
+                  <td style={{ border: "1px solid #ddd", padding: "10px" }}>{item.address}</td>
+                  <td style={{ border: "1px solid #ddd", padding: "10px" }}>{item.dob}</td>
+                  <td style={{ border: "1px solid #ddd", padding: "10px" }}>{item.phone}</td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>

@@ -30,6 +30,8 @@ export const teamSamparkData = {
         {
             id: 1,
             teamName: "Team A",
+            target: 50,
+            filled_forms: 30,
             members: [
                 { id: 101, name: "Ravi Patel", phone: "9876543210", address: "Ahmedabad, Gujarat", dob: "2000-05-14" },
                 { id: 102, name: "Jay Shah", phone: "9090909090", address: "Surat, Gujarat", dob: "1999-11-23" },
@@ -39,6 +41,8 @@ export const teamSamparkData = {
         {
             id: 2,
             teamName: "Team B",
+            target: 50,
+            filled_forms: 30,
             members: [
                 { id: 201, name: "Neel Vyas", phone: "9165165412", address: "Bhavnagar, Gujarat", dob: "2000-08-18" },
                 { id: 202, name: "Shreyansh Joshi", phone: "9991100088", address: "Rajkot, Gujarat", dob: "1998-03-25" },
@@ -48,6 +52,8 @@ export const teamSamparkData = {
         {
             id: 3,
             teamName: "Team C",
+            target: 50,
+            filled_forms: 30,
             members: [
                 { id: 301, name: "Manav Trivedi", phone: "9988776611", address: "Junagadh, Gujarat", dob: "1999-09-02" },
                 { id: 302, name: "Viraj Chavda", phone: "7878123456", address: "Mehsana, Gujarat", dob: "2001-02-17" },
@@ -88,4 +94,10 @@ export const groupedByXetra = [
         { name: "Akshardham", sanchalak_name: "Pragneshkumar Godhani", mandal_target: 40, mandal_filled_form: 25 },
         { name: "Maitrinagar", sanchalak_name: "Akshaybhai Umakantbhai Patel", mandal_target: 50, mandal_filled_form: 42 }
     ]]
+];
+
+export const samparkData = [
+    { id: 301, name: "Manav Trivedi", phone: "9988776611", address: "Junagadh, Gujarat", dob: "1999-09-02" },
+    { id: 302, name: "Viraj Chavda", phone: "7878123456", address: "Mehsana, Gujarat", dob: "2001-02-17" },
+    { id: 303, name: "Sagar Panchal", phone: "9977332211", address: "Nadiad, Gujarat", dob: "1998-12-29" }
 ];

@@ -125,20 +125,26 @@ export default function SupervisorMandals() {
                 {mode === "sevaks" && (
                     <>
                         <div style={{ width: "90%", margin: "auto", marginTop: "30px" }}>
+
                             <Box display="flex" justifyContent="space-between" mb={2}>
+                                <Button
+                                    color="primary"
+                                    onClick={handleBackToMandals}
+                                    style={{ justifyContent: "flex-end" }}
+                                >
+                                    Back
+                                </Button>
                                 <Box display="flex" gap={1}>
                                     {selectedMandal && <Chip label={"Mandal: " + selectedMandal} />}
                                 </Box>
-
-                                <TextField
-                                    size="small"
-                                    placeholder="Search sevaks..."
-                                    value={qSevak}
-                                    onChange={(e) => setQSevak(e.target.value)}
-                                    sx={{ width: 360 }}
-                                />
                             </Box>
-
+                            <TextField
+                                size="small"
+                                placeholder="Search sevaks..."
+                                value={qSevak}
+                                onChange={(e) => setQSevak(e.target.value)}
+                                sx={{ width: 360 }}
+                            />
                             {error && <Box color="error.main">{error}</Box>}
 
                         </div>

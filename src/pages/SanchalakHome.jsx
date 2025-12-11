@@ -85,7 +85,7 @@ const SanchalakHome = () => {
               <CardActionArea sx={{ height: "100%" }} onClick={() => navigate("/sampark-yuvak-team-wise")}>
                 <CardContent sx={{ textAlign: "center" }}>
                   <Typography variant="h6" fontWeight="bold">Show Details</Typography>
-                  <Typography style={{ whiteSpace: "nowrap" }}>Sampark Yuvak Details</Typography>
+                  <Typography style={{ whiteSpace: "nowrap" }}>Sampark Yuvak List</Typography>
                 </CardContent>
               </CardActionArea>
             </Card>

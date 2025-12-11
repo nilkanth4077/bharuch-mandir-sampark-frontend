@@ -4,10 +4,12 @@ import SupervisorMandals from '../components/SupervisorMandals';
 import { Box, CardContent, Chip, Grid, Paper, TextField, Typography } from '@mui/material';
 import { Button, Card } from 'reactstrap';
 import SupervisorTeams from '../components/SupervisorTeams';
+import { useNavigate } from 'react-router-dom';
 
 const NirdeshakHome = () => {
 
   // ================= STATIC VALUES FOR NOW =================
+  const navigate = useNavigate();
   const [isLeader] = useState(true);
   const [isAdmin] = useState(true);
   const [isSanchalak] = useState(true);
@@ -79,7 +81,7 @@ const NirdeshakHome = () => {
             )}
 
             {groupedByXetra.map(([xetra, rows]) => (
-              <Box mb={3} key={xetra}>
+              <Box mb={3} key={xetra} onClick={() => navigate("/sanchalak-home")}>
                 <Typography align="center" fontWeight={800} fontSize={23}>{xetra} (Nirdeshak)</Typography>
 
                 <Grid container spacing={2} mt={1}>
@@ -105,31 +107,6 @@ const NirdeshakHome = () => {
                 </Paper>
               </Box>
             ))}
-          </>
-        )}
-
-        {/* ================== SEVAK VIEW ================== */}
-        {mode === "sevaks" && (
-          <>
-            <div style={{ width: "90%", margin: "auto", marginTop: "30px" }}>
-              <Box display="flex" justifyContent="space-between" mb={2}>
-                <Box display="flex" gap={1}>
-                  {selectedMandal && <Chip label={"Mandal: " + selectedMandal} />}
-                </Box>
-
-                <TextField
-                  size="small"
-                  placeholder="Search sevaks..."
-                  value={qSevak}
-                  onChange={(e) => setQSevak(e.target.value)}
-                  sx={{ width: 360 }}
-                />
-              </Box>
-
-              {error && <Box color="error.main">{error}</Box>}
-
-            </div>
-            <SupervisorTeams />
           </>
         )}
       </Box>

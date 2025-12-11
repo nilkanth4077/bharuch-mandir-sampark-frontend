@@ -82,3 +82,10 @@ export const mandalYuvaks = [
 ];
 
 export default mandalYuvaks;
+
+export const groupedByXetra = [
+    ["Bharuch 1", [
+        { name: "Akshardham", sanchalak_name: "Pragneshkumar Godhani", mandal_target: 40, mandal_filled_form: 25 },
+        { name: "Maitrinagar", sanchalak_name: "Akshaybhai Umakantbhai Patel", mandal_target: 50, mandal_filled_form: 42 }
+    ]]
+];

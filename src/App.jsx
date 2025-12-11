@@ -21,6 +21,8 @@ import SanchalakHome from "./pages/SanchalakHome";
 import ManageMandalTeams from "./pages/ManageMandalTeams";
 import ManageMandalYuvaks from "./pages/ManageMandalYuvaks";
 import SamparkYuvakDetailsTeamWise from "./pages/SamparkYuvakDetailsTeamWise";
+import { Statistics } from "./pages/Statistics";
+import { SamparkYuvakInfo } from "./pages/SamparkYuvakInfo";
 
 function App() {
   return (
@@ -46,6 +48,8 @@ function App() {
           <Route path="/manage-mandal-teams" element={<ManageMandalTeams />} />
           <Route path="/manage-mandal-yuvaks" element={<ManageMandalYuvaks />} />
           <Route path="/sampark-yuvak-team-wise" element={<SamparkYuvakDetailsTeamWise />} />
+          <Route path="/statistics" element={<Statistics />} />
+          <Route path="/sampark-yuvak-info" element={<SamparkYuvakInfo />} />
         </Routes>
       </Router>
     </div>

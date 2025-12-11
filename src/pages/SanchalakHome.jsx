@@ -64,7 +64,7 @@ const SanchalakHome = () => {
               justifyContent: "center", alignItems: "center",
               ":hover": { boxShadow: 6, transform: "scale(1.05)", transition: "0.3s" }
             }}>
-              <CardActionArea sx={{ height: "100%" }} onClick={() => navigate("/reports")}>
+              <CardActionArea sx={{ height: "100%" }} onClick={() => navigate("/statistics")}>
                 <CardContent sx={{ textAlign: "center" }}>
                   <Typography variant="h6" fontWeight="bold">Statistics</Typography>
                   <Typography style={{ whiteSpace: "nowrap" }}>View analytics reports</Typography>

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FaEdit, FaPencilAlt, FaTrash } from "react-icons/fa";
 import EditMemberModal from "./EditMandalYuvakModal";
-import { teamMandalData } from "../api/data";
+import { teamMandalData, teamSamparkData } from "../api/data";
 import EditMandalYuvakModal from "./EditMandalYuvakModal";
 import EditTeamModal from "./EditTeamModal";
 
@@ -37,7 +37,7 @@ export default function SupervisorTeams() {
         <>
             <div style={{ width: "90%", margin: "auto", marginTop: "30px" }}>
 
-                {teamMandalData.teams.map(team => (
+                {teamSamparkData.teams.map(team => (
                     <div
                         key={team.id}
                         style={{
@@ -90,8 +90,10 @@ export default function SupervisorTeams() {
                                     <thead>
                                         <tr style={{ background: "#f5f5f5" }}>
                                             <th style={th}>Id</th>
-                                            <th style={th}>Mandal Yuvak Name</th>
+                                            <th style={th}>Sampark Yuvak Name</th>
                                             <th style={th}>Phone</th>
+                                            <th style={th}>DOB</th>
+                                            <th style={th}>Address</th>
                                             {(isAdmin || isSanchalak) ? <th style={th}>Actions</th> : null}
                                         </tr>
                                     </thead>
@@ -99,9 +101,11 @@ export default function SupervisorTeams() {
                                     <tbody>
                                         {team.members.map(m => (
                                             <tr key={m.id}>
-                                                <td style={td}>{m.sevak_id}</td>
+                                                <td style={td}>{m.id}</td>
                                                 <td style={td}>{m.name}</td>
-                                                <td style={td}>{m.phone_number}</td>
+                                                <td style={td}>{m.phone}</td>
+                                                <td style={td}>{m.dob}</td>
+                                                <td style={td}>{m.address}</td>
                                                 {(isAdmin || isSanchalak) && (
                                                     <td style={{ border: "1px solid #ddd", padding: "10px", textAlign: "center", whiteSpace: "nowrap" }}>
                                                         <FaEdit

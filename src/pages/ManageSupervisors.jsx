@@ -29,10 +29,10 @@ const ManageSupervisors = () => {
                     alignItems: 'center',
                     padding: '20px'
                 }}>
-                    <h5 style={{ margin: 0 }}>Manage Supervisors</h5>
+                    <h5 style={{ margin: 0 }}>Manage Roles</h5>
 
                     <Button color="warning" onClick={handleAddSupervisor}>
-                        Add Supervisor
+                        Add Role
                     </Button>
                 </div>
                 <div style={{ overflowX: "auto", marginTop: "20px" }}>

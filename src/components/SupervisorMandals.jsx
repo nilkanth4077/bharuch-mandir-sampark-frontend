@@ -81,7 +81,7 @@ export default function SupervisorMandals() {
                                 placeholder="Search mandals…"
                                 value={qMandal}
                                 onChange={(e) => setQMandal(e.target.value)}
-                                sx={{ width: 360 }}
+                                sx={{ width: "100%" }}
                             />
                         </Box>
 
@@ -143,7 +143,7 @@ export default function SupervisorMandals() {
                                 placeholder="Search sevaks..."
                                 value={qSevak}
                                 onChange={(e) => setQSevak(e.target.value)}
-                                sx={{ width: 360 }}
+                                sx={{ width: "100%" }}
                             />
                             {error && <Box color="error.main">{error}</Box>}
 

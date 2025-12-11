@@ -11,6 +11,7 @@ import FormLabel from "@mui/material/FormLabel";
 import CircularProgress from "@mui/material/CircularProgress";
 import {
   Button,
+  Checkbox,
   FormControlLabel,
   InputLabel,
   MenuItem,
@@ -27,6 +28,7 @@ function AddSupervisorModal({ modal, setModal }) {
     phone: "",
     post: "",
     mandal: "",
+    kshetra: "",
   });
   const [errors, setErrors] = useState({});
 
@@ -42,10 +44,24 @@ function AddSupervisorModal({ modal, setModal }) {
 
   const validateForm = () => {
     const errs = {};
-    if (!formData.post) errs.post = "પોસ્ટ પસંદ કરો";
-    if (!formData.mandal) errs.mandal = "મંડળ પસંદ કરો";
-    if (!formData.name) errs.name = "સુપરવાઇજરનું નામ લખો";
-    if (!formData.phone) errs.phone = "સુપરવાઇજરનો ફોન નંબર લખો";
+
+    if (!formData.post) errs.post = "Select a post";
+
+    if (!formData.name) errs.name = "Enter name";
+
+    if (!formData.phone) errs.phone = "Enter phone number";
+
+    if (formData.post === "nirdeshak" && !formData.kshetra) {
+      errs.kshetra = "Select kshetra";
+    }
+
+    if (formData.post === "nirikshak" && (!formData.mandal || formData.mandal.length === 0)) {
+      errs.mandal = "Select at least one mandal";
+    }
+
+    if (formData.post === "sanchalak" && !formData.mandal) {
+      errs.mandal = "Select a mandal";
+    }
 
     return errs;
   };
@@ -67,6 +83,7 @@ function AddSupervisorModal({ modal, setModal }) {
         phone: formData.phone,
         post: formData.post,
         mandal: formData.mandal,
+        khetra: formData.kshetra,
         sevak_id: mySevakCode,
       };
 
@@ -84,11 +101,11 @@ function AddSupervisorModal({ modal, setModal }) {
   return (
     <div>
       <Modal isOpen={modal} toggle={toggle}>
-        <ModalHeader toggle={toggle}>Add Supervisor</ModalHeader>
+        <ModalHeader toggle={toggle}>Add Role</ModalHeader>
         <ModalBody>
           <FormControl fullWidth variant="outlined" margin="normal">
             <TextField
-              label="સુપરવાઇજરનું નામ"
+              label="Name"
               name="name"
               type="text"
               value={formData.name}
@@ -103,7 +120,7 @@ function AddSupervisorModal({ modal, setModal }) {
 
           <FormControl fullWidth variant="outlined" margin="normal">
             <TextField
-              label="સુપરવાઇજરનો ફોન નંબર"
+              label="Phone No"
               name="phone"
               type="tel"
               value={formData.phone || ""}
@@ -118,26 +135,23 @@ function AddSupervisorModal({ modal, setModal }) {
           </FormControl>
 
           <FormControl fullWidth variant="outlined" margin="normal" size="small">
-            <InputLabel id="post-select-label">સુપરવાઇજરની પોસ્ટ</InputLabel>
+            <InputLabel id="post-select-label">Select Post</InputLabel>
             <Select
               labelId="post-select-label"
-              label="સુપરવાઇજરની પોસ્ટ"
+              label="Post"
               name="post"
               value={formData.post}
               onChange={handleChange}
               error={!!errors.post}
             >
-              <MenuItem key="sant_nirdeshak" value="sant_nirdeshak">
-                સંત નિર્દેશક
-              </MenuItem>
               <MenuItem key="nirdeshak" value="nirdeshak">
-                નિર્દેશક
+                Nirdeshak
               </MenuItem>
               <MenuItem key="nirikshak" value="nirikshak">
-                નિરીક્ષક
+                Nirikshak
               </MenuItem>
               <MenuItem key="sanchalak" value="sanchalak">
-                સંચાલક
+                Sanchalak
               </MenuItem>
             </Select>
             {errors.post && (
@@ -145,30 +159,65 @@ function AddSupervisorModal({ modal, setModal }) {
             )}
           </FormControl>
 
-          <FormControl fullWidth variant="outlined" margin="normal" size="small">
-            <InputLabel id="mandal-select-label">સુપરવાઇજરનું મંડળ</InputLabel>
-            <Select
-              labelId="mandal-select-label"
-              label="સુપરવાઇજરનું મંડળ"
-              name="mandal"
-              value={formData.mandal}
-              onChange={handleChange}
-              error={!!errors.mandal}
-            >
-              <MenuItem key="SJ" value="SJ">
-                સહજાનંદ (SJ)
-              </MenuItem>
-              <MenuItem key="NK" value="NK">
-                નારાયણકુંજ (NK)
-              </MenuItem>
-              <MenuItem key="SRB" value="SRB">
-                સુરભિ (SRB)
-              </MenuItem>
-            </Select>
-            {errors.mandal && (
-              <div style={{ color: "#d32f2f", fontSize: 12, marginTop: 4 }}>{errors.mandal}</div>
-            )}
-          </FormControl>
+          {/* Dynamic Fields Based on Post Selection */}
+          {formData.post === "nirdeshak" && (
+            <FormControl fullWidth margin="normal" size="small">
+              <InputLabel id="kshetra-label">Select Kshetra</InputLabel>
+              <Select
+                labelId="kshetra-label"
+                label="Select Kshetra"
+                name="kshetra"
+                value={formData.kshetra || ""}
+                onChange={handleChange}
+              >
+                <MenuItem value="North">Kshetra 1</MenuItem>
+                <MenuItem value="South">Kshetra 2</MenuItem>
+                <MenuItem value="East">Kshetra 3</MenuItem>
+              </Select>
+            </FormControl>
+          )}
+
+          {formData.post === "nirikshak" && (
+            <FormControl fullWidth margin="normal" size="small">
+              <InputLabel id="mandal-multi-label">Select Mandals</InputLabel>
+              <Select
+                labelId="mandal-multi-label"
+                multiple
+                label="Select Mandals"
+                name="mandal"
+                value={formData.mandal || []}
+                onChange={(e) =>
+                  setFormData((p) => ({ ...p, mandal: e.target.value }))
+                }
+                renderValue={(selected) => selected.join(", ")}
+              >
+                {["SJ", "NK", "SRB"].map((m) => (
+                  <MenuItem key={m} value={m}>
+                    <Checkbox checked={(formData.mandal || []).indexOf(m) > -1} />
+                    <span>{m}</span>
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          )}
+
+          {formData.post === "sanchalak" && (
+            <FormControl fullWidth margin="normal" size="small">
+              <InputLabel id="mandal-single-label">Select Mandal</InputLabel>
+              <Select
+                labelId="mandal-single-label"
+                label="Select Mandal"
+                name="mandal"
+                value={formData.mandal || ""}
+                onChange={handleChange}
+              >
+                <MenuItem value="SJ">Sahjanand (SJ)</MenuItem>
+                <MenuItem value="NK">Narayankunj (NK)</MenuItem>
+                <MenuItem value="SRB">Surbhi (SRB)</MenuItem>
+              </Select>
+            </FormControl>
+          )}
+
         </ModalBody>
 
         <ModalFooter>

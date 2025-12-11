@@ -16,6 +16,7 @@ const SanchalakHome = () => {
       <Header />
 
       <div>
+        <h4 style={{ marginInline: "22px", marginTop: "25px" }}>Mandal Name</h4>
         <Grid container spacing={2} sx={{ p: 2 }}>
 
           {/* CARD 1 */}

@@ -42,7 +42,7 @@ const NirikshakHome = () => {
               )}
 
               {groupedByXetra.map(([xetra, rows]) => (
-                <Box mb={3} key={xetra} onClick={() => navigate("/sampark-yuvak-team-wise")}>
+                <Box mb={3} key={xetra} onClick={() => navigate("/sanchalak-home")}>
                   {/* <Typography align="center" fontWeight={800} fontSize={23}>{xetra}</Typography> */}
 
                   <Grid container spacing={2} mt={1}>

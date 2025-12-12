@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Header from '../components/Header'
 import SupervisorMandals from '../components/SupervisorMandals';
 import { Box, CardActionArea, CardContent, Chip, Grid, Paper, TextField, Typography } from '@mui/material';
@@ -6,17 +6,51 @@ import { Button, Card } from 'reactstrap';
 import SupervisorTeams from '../components/SupervisorTeams';
 import CreateTeamModal from '../components/CreateTeamModal';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { BACKEND_ENDPOINT } from '../api/api';
 
 const SanchalakHome = () => {
 
   const navigate = useNavigate();
+  const sevakDetails = JSON.parse(localStorage.getItem("sevakDetails"));
+  const password = localStorage.getItem("password");
+
+  const [mandals, setMandals] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [myMandal, setMyMandal] = useState(null);
+
+  useEffect(() => {
+    const fetchMandals = async () => {
+      try {
+        const response = await axios.get(`${BACKEND_ENDPOINT}/api/mandals`, {
+          auth: {
+            username: sevakDetails.userId, // e.g., ADMIN001
+            password: password
+          }
+        });
+        const allMandals = response.data;
+
+        const myMandal = allMandals.find(m => m._id === sevakDetails.mandalId);
+        setMyMandal(myMandal);
+
+      } catch (error) {
+        console.error("Error fetching mandals:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchMandals();
+  }, []);
+
+  console.log("Mandal assigned to sevak:", myMandal);
 
   return (
     <>
       <Header />
 
       <div>
-        <h4 style={{ marginInline: "22px", marginTop: "25px" }}>Mandal Name</h4>
+        <h4 style={{ marginInline: "22px", marginTop: "25px" }}>{myMandal?.name}</h4>
         <Grid container spacing={2} sx={{ p: 2 }}>
 
           {/* CARD 1 */}
@@ -28,7 +62,11 @@ const SanchalakHome = () => {
               justifyContent: "center", alignItems: "center",
               ":hover": { boxShadow: 6, transform: "scale(1.05)", transition: "0.3s" }
             }}>
-              <CardActionArea sx={{ height: "100%" }} onClick={() => navigate("/manage-mandal-yuvaks")}>
+              <CardActionArea sx={{ height: "100%" }}
+                onClick={() => navigate("/manage-mandal-yuvaks", {
+                  state: { mandalId: myMandal?._id }
+                })}
+              >
                 <CardContent sx={{ textAlign: "center" }}>
                   <Typography variant="h6" fontWeight="bold">Mandal</Typography>
                   <Typography style={{ whiteSpace: "nowrap" }}>Add Mandal Yuvak</Typography>
@@ -46,7 +84,11 @@ const SanchalakHome = () => {
               justifyContent: "center", alignItems: "center",
               ":hover": { boxShadow: 6, transform: "scale(1.05)", transition: "0.3s" }
             }}>
-              <CardActionArea sx={{ height: "100%" }} onClick={() => navigate("/manage-mandal-teams")}>
+              <CardActionArea sx={{ height: "100%" }}
+                onClick={() => navigate("/manage-mandal-teams", {
+                  state: { mandalId: myMandal?._id }
+                })}
+              >
                 <CardContent sx={{ textAlign: "center" }}>
                   <Typography variant="h6" fontWeight="bold">Teams</Typography>
                   <Typography style={{ whiteSpace: "nowrap" }}>View & Create Teams</Typography>

@@ -1,12 +1,14 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FaEdit, FaTrash } from 'react-icons/fa';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Button } from 'reactstrap';
 import AddSupervisorModal from '../components/AddSupervisorModal';
 import Header from '../components/Header';
 import AddMandalYuvakModal from '../components/AddMandalYuvakModal';
 import { mandalYuvaks } from '../api/data';
 import { Box, TextField } from '@mui/material';
+import { BACKEND_ENDPOINT } from '../api/api';
+import axios from 'axios';
 
 const ManageMandalYuvaks = () => {
     const navigate = useNavigate();
@@ -23,6 +25,36 @@ const ManageMandalYuvaks = () => {
         alert("Delete Mandal Yuvak clicked");
     }
 
+    const location = useLocation();
+    const { mandalId } = location.state || {};
+    const sevakDetails = JSON.parse(localStorage.getItem("sevakDetails"));
+    const password = localStorage.getItem("password");
+
+    console.log("Mandal ID from location:", mandalId);
+
+    const [teams, setTeams] = useState([]);
+
+    useEffect(() => {
+        const fetchTeams = async () => {
+            if (!mandalId) return;
+            try {
+                const response = await axios.get(`${BACKEND_ENDPOINT}/api/teams/mandal/${mandalId}`, {
+                    auth: {
+                        username: sevakDetails.userId, // e.g., ADMIN001
+                        password: password
+                    }
+                });
+                setTeams(response.data);
+            } catch (error) {
+                console.error("Error fetching teams:", error);
+            }
+        };
+
+        fetchTeams();
+    }, [mandalId]);
+
+    console.log("Teams for mandal:", teams);
+
     return (
         <>
             <Header />
@@ -32,7 +64,7 @@ const ManageMandalYuvaks = () => {
                     justifyContent: 'space-between',
                     alignItems: 'center',
                 }}>
-                    <h5 style={{ margin: 0 }}>Mandal Yuvak</h5>
+                    <h5 style={{ margin: 0 }}>Mandal Yuvak (Static)</h5>
 
                     <Button color="warning" onClick={handleAddSupervisor}>
                         Add Mandal Yuvak

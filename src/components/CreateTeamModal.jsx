@@ -1,52 +1,59 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useState } from "react";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import { Button, TextField, FormControl } from "@mui/material";
+import { CircularProgress } from "@mui/material";
+import { toast, ToastContainer } from "react-toastify";
 import { BACKEND_ENDPOINT } from "../api/api";
 import axios from "axios";
-import { toast, ToastContainer } from "react-toastify";
-import TextField from "@mui/material/TextField";
-import FormControl from "@mui/material/FormControl";
-import CircularProgress from "@mui/material/CircularProgress";
-import {
-  Button,
-  Checkbox,
-  InputLabel,
-  ListItemText,
-  MenuItem,
-  Select,
-} from "@mui/material";
-import mandalYuvaks from "../api/data";
+import { FaPlus, FaMinus } from "react-icons/fa";
 
-function CreateTeamModal({ modal, setModal }) {
-
-  const me = JSON.parse(localStorage.getItem("sevakDetails")) || {};
+function CreateTeamModal({ modal, setModal, mandalId }) {
+  const sevakDetails = JSON.parse(localStorage.getItem("sevakDetails")) || {};
+  const password = localStorage.getItem("password");
 
   const [loader, setLoader] = useState(false);
-  const [errors, setErrors] = useState({});
-  const [yuvaks, setYuvaks] = useState([]);
   const [formData, setFormData] = useState({
     name: "",
-    target: "",
-    yuvaks: []
+    members: [{ name: "", phone: "" }],
   });
+  const [errors, setErrors] = useState({});
+
   const toggle = () => setModal(!modal);
 
-  useEffect(() => {
-    setYuvaks(mandalYuvaks.filter((x) => x.team === "Not Assigned"));
-  }, []);
-
-  const handleChange = (e) => {
+  const handleChange = (e, index) => {
     const { name, value } = e.target;
 
-    let v = value;
+    if (name === "name") {
+      // team name
+      setFormData((p) => ({ ...p, name: value }));
+    } else {
+      // member fields
+      const members = [...formData.members];
+      if (name === "memberName") members[index].name = value;
+      if (name === "memberPhone") members[index].phone = value;
 
-    setFormData((p) => ({ ...p, [name]: v }));
+      setFormData((p) => ({ ...p, members }));
+    }
+  };
+
+  const addMember = () => {
+    setFormData((p) => ({ ...p, members: [...p.members, { name: "", phone: "" }] }));
+  };
+
+  const removeMember = (index) => {
+    const members = [...formData.members];
+    members.splice(index, 1);
+    setFormData((p) => ({ ...p, members }));
   };
 
   const validateForm = () => {
     const errs = {};
     if (!formData.name) errs.name = "Enter team name";
-    if (!formData.target) errs.target = "Enter target";
-    if (formData.yuvaks.length === 0) errs.yuvaks = "Select at least one yuvak";
+
+    formData.members.forEach((m, i) => {
+      if (!m.name) errs[`memberName${i}`] = "Enter member name";
+      if (!m.phone) errs[`memberPhone${i}`] = "Enter phone number";
+    });
 
     return errs;
   };
@@ -65,101 +72,100 @@ function CreateTeamModal({ modal, setModal }) {
     try {
       const payload = {
         name: formData.name,
-        target: formData.target,
-        yuvaks: formData.yuvaks
+        mandalId: mandalId,
+        members: formData.members,
       };
-      alert("Work in progress: " + JSON.stringify(payload));
+
+      const response = await axios.post(`${BACKEND_ENDPOINT}/api/teams`, payload, {
+        auth: { username: sevakDetails.userId, password },
+      });
+      console.log("Team created:", response.data);
+
+      toast.success("Team created successfully!");
+      setTimeout(() => {
+        toggle();
+        window.location.reload();
+      }, 3000);
     } catch (error) {
-      toast.error("An error occurred: " + error.message);
+      console.error("Error creating team:", error);
+      toast.error("Failed to create team");
     } finally {
       setLoader(false);
-      toggle();
     }
   };
 
   return (
     <div>
-      <Modal isOpen={modal} toggle={toggle} fade={false}>
+      <Modal isOpen={modal} toggle={toggle}>
         <ModalHeader toggle={toggle}>Create Team</ModalHeader>
         <ModalBody>
-          <FormControl fullWidth variant="outlined" margin="normal">
+          <FormControl fullWidth margin="normal">
             <TextField
               label="Team Name"
               name="name"
-              type="text"
               value={formData.name}
               onChange={handleChange}
-              variant="outlined"
-              color="secondary"
               error={!!errors.name}
               helperText={errors.name}
-              fullWidth
             />
           </FormControl>
 
-          <FormControl fullWidth variant="outlined" margin="normal">
-            <TextField
-              label="Target"
-              name="target"
-              type="number"
-              value={formData.target}
-              onChange={handleChange}
-              variant="outlined"
-              color="secondary"
-              error={!!errors.target}
-              helperText={errors.target}
-              fullWidth
-            />
-          </FormControl>
-
-          <FormControl fullWidth margin="normal" error={!!errors.yuvaks}>
-            <InputLabel>Select Yuvaks</InputLabel>
-
-            <Select
-              multiple
-              name="yuvaks"
-              value={formData.yuvaks}
-              onChange={handleChange}
-              label="Select Yuvaks"
-              renderValue={(selected) =>
-                selected.map(id => yuvaks.find(x => x.id === id)?.name).join(", ")
-              }
+          <h6 style={{ marginTop: "20px" }}>Team Members</h6>
+          {formData.members.map((member, index) => (
+            <div
+              key={index}
+              style={{ display: "flex", gap: "10px", alignItems: "center", marginBottom: "10px" }}
             >
-              {yuvaks.map((y) => (
-                <MenuItem key={y.id} value={y.id}>
-                  <Checkbox checked={formData.yuvaks.includes(y.id)} />
-                  <ListItemText primary={`${y.name} (${y.phone})`} />
-                </MenuItem>
-              ))}
-            </Select>
+              <TextField
+                label="Name"
+                name="memberName"
+                value={member.name}
+                onChange={(e) => handleChange(e, index)}
+                error={!!errors[`memberName${index}`]}
+                helperText={errors[`memberName${index}`]}
+                fullWidth
+              />
+              <TextField
+                label="Phone"
+                name="memberPhone"
+                value={member.phone}
+                onChange={(e) => handleChange(e, index)}
+                error={!!errors[`memberPhone${index}`]}
+                helperText={errors[`memberPhone${index}`]}
+                fullWidth
+                inputProps={{ inputMode: "numeric", pattern: "[0-9]{10}", maxLength: 10 }}
+              />
+              <Button
+                color="error"
+                onClick={() => removeMember(index)}
+                disabled={formData.members.length === 1}
+              >
+                <FaMinus />
+              </Button>
+            </div>
+          ))}
 
-            <small style={{ color: "red" }}>{errors.yuvaks}</small>
-          </FormControl>
-
+          <Button color="primary" onClick={addMember} style={{ marginTop: "10px" }}>
+            <FaPlus /> Add Member
+          </Button>
         </ModalBody>
 
         <ModalFooter>
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={handleSubmit}
-            disabled={loader}
-          >
-            {loader ? <CircularProgress size={24} /> : "Add"}
+          <Button variant="contained" color="secondary" onClick={handleSubmit} disabled={loader}>
+            {loader ? <CircularProgress size={24} /> : "Create Team"}
           </Button>
           <Button
             color="error"
-            style={{ margin: "10px" }}
             variant="contained"
             onClick={toggle}
             disabled={loader}
+            style={{ marginLeft: "10px" }}
           >
             Cancel
           </Button>
         </ModalFooter>
       </Modal>
 
-      {/* keep if you don’t already have a global container */}
       <ToastContainer position="top-center" autoClose={5000} pauseOnHover theme="colored" />
     </div>
   );

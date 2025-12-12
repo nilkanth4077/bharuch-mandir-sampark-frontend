@@ -11,6 +11,10 @@ const ManageMandalTeams = () => {
 
     const [showCreateTeam, setShowCreateTeam] = useState(false);
     const handleTeamCreation = () => setShowCreateTeam(true);
+    const [reloadTeams, setReloadTeams] = useState(false);
+
+    const refreshTeams = () => setReloadTeams(prev => !prev);
+
     const location = useLocation();
     const { mandalId } = location.state || {};
 
@@ -31,10 +35,10 @@ const ManageMandalTeams = () => {
                     <span style={{ whiteSpace: "nowrap" }}>Create Team</span>
                 </Button>
             </div>
-            <SupervisorTeams />
+            <SupervisorTeams reload={reloadTeams} />
 
             {showCreateTeam && (
-                <CreateTeamModal modal={showCreateTeam} setModal={setShowCreateTeam} mandalId={mandalId} />
+                <CreateTeamModal modal={showCreateTeam} setModal={setShowCreateTeam} mandalId={mandalId} refreshTeams={refreshTeams} />
             )}
         </>
     )

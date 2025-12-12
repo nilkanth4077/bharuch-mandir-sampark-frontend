@@ -1,19 +1,28 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FaEdit, FaTrash } from "react-icons/fa";
 import EditMemberModal from "../components/EditMandalYuvakModal";
 import { teamMandalData, teamSamparkData } from "../api/data";
 import EditMandalYuvakModal from "../components/EditMandalYuvakModal";
 import Header from '../components/Header';
 import EditSamparkYuvakModal from '../components/EditSamparkYuvakModal';
+import { BACKEND_ENDPOINT } from '../api/api';
+import axios from 'axios';
+import { useLocation } from 'react-router-dom';
 
 export default function SamparkYuvakDetailsTeamWise() {
     const [openTeam, setOpenTeam] = useState(null);
     const [showEditMember, setShowEditMember] = useState(false);
+    const [teamWiseSamparkYuvaks, setTeamWiseSamparkYuvaks] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     const sevakDetails = JSON.parse(localStorage.getItem("sevakDetails"));
+    const password = localStorage.getItem("password");
     const role = sevakDetails.role;
     const isAdmin = role === "Admin";
     const isSanchalak = role === "Sanchalak";
+
+    const location = useLocation();
+    const mandalId = location.state?.mandalId || null;
 
     const handleEditMember = () => setShowEditMember(true);
     const handleDeleteMember = () => {
@@ -32,6 +41,29 @@ export default function SamparkYuvakDetailsTeamWise() {
         alert("Delete Member clicked");
     }
 
+    useEffect(() => {
+        const fetchTeams = async () => {
+            try {
+                const response = await axios.get(`${BACKEND_ENDPOINT}/api/ahevaals/my`, { // Specific for team, not all, need new api
+                    auth: {
+                        username: sevakDetails.userId, // e.g., ADMIN001
+                        password: password
+                    }
+                });
+                console.log("Fetched teams wise yuvaks:", response.data);
+                setTeamWiseSamparkYuvaks(response.data);
+            } catch (error) {
+                console.error("Error fetching teams:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchTeams();
+    }, []);
+
+    console.log("Teams wise yuvaks:", teamWiseSamparkYuvaks);
+
     return (
         <>
             <Header />
@@ -42,7 +74,7 @@ export default function SamparkYuvakDetailsTeamWise() {
                 paddingTop: '20px',
                 marginInline: '15px'
             }}>
-                <h5 style={{ margin: 0, whiteSpace: "nowrap", marginLeft: "10px" }} >Sampark Yuvak Details</h5>
+                <h5 style={{ margin: 0, whiteSpace: "nowrap", marginLeft: "10px" }} >Sampark Yuvak Details (Static)</h5>
             </div>
 
             <div style={{ width: "90%", margin: "auto", marginTop: "30px" }}>

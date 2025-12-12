@@ -7,7 +7,7 @@ import { BACKEND_ENDPOINT } from "../api/api";
 import axios from "axios";
 import { FaPlus, FaMinus } from "react-icons/fa";
 
-function CreateTeamModal({ modal, setModal, mandalId }) {
+function CreateTeamModal({ modal, setModal, mandalId, refreshTeams }) {
   const sevakDetails = JSON.parse(localStorage.getItem("sevakDetails")) || {};
   const password = localStorage.getItem("password");
 
@@ -52,7 +52,9 @@ function CreateTeamModal({ modal, setModal, mandalId }) {
 
     formData.members.forEach((m, i) => {
       if (!m.name) errs[`memberName${i}`] = "Enter member name";
-      if (!m.phone) errs[`memberPhone${i}`] = "Enter phone number";
+      if (!m.phone || m.phone.length !== 10) {
+        errs[`memberPhone${i}`] = "Phone must be exactly 10 digits";
+      }
     });
 
     return errs;
@@ -82,6 +84,7 @@ function CreateTeamModal({ modal, setModal, mandalId }) {
       console.log("Team created:", response.data);
 
       toast.success("Team created successfully!");
+      refreshTeams();
       setTimeout(() => {
         toggle();
       }, 3000);
@@ -103,7 +106,14 @@ function CreateTeamModal({ modal, setModal, mandalId }) {
               label="Team Name"
               name="name"
               value={formData.name}
-              onChange={handleChange}
+              onChange={(e) => {
+                let value = e.target.value.toUpperCase();     // convert to uppercase
+
+                // allow only A-Z and only 1 character
+                if (/^[A-Z]?$/.test(value)) {
+                  handleChange({ target: { name: "name", value } });
+                }
+              }}
               error={!!errors.name}
               helperText={errors.name}
             />

@@ -1,13 +1,18 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Header from '../components/Header';
 import { Button } from 'reactstrap';
 import SupervisorTeams from '../components/SupervisorTeams';
 import CreateTeamModal from '../components/CreateTeamModal';
+import { useLocation } from 'react-router-dom';
+import axios from 'axios';
+import { BACKEND_ENDPOINT } from '../api/api';
 
 const ManageMandalTeams = () => {
 
     const [showCreateTeam, setShowCreateTeam] = useState(false);
     const handleTeamCreation = () => setShowCreateTeam(true);
+    const location = useLocation();
+    const { mandalId } = location.state || {};
 
     return (
 
@@ -29,7 +34,7 @@ const ManageMandalTeams = () => {
             <SupervisorTeams />
 
             {showCreateTeam && (
-                <CreateTeamModal modal={showCreateTeam} setModal={setShowCreateTeam} />
+                <CreateTeamModal modal={showCreateTeam} setModal={setShowCreateTeam} mandalId={mandalId} />
             )}
         </>
     )

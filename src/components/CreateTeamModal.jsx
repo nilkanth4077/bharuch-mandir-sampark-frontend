@@ -106,7 +106,14 @@ function CreateTeamModal({ modal, setModal, mandalId, refreshTeams }) {
               label="Team Name"
               name="name"
               value={formData.name}
-              onChange={handleChange}
+              onChange={(e) => {
+                let value = e.target.value.toUpperCase();     // convert to uppercase
+
+                // allow only A-Z and only 1 character
+                if (/^[A-Z]?$/.test(value)) {
+                  handleChange({ target: { name: "name", value } });
+                }
+              }}
               error={!!errors.name}
               helperText={errors.name}
             />

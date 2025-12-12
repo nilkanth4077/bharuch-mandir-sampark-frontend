@@ -48,7 +48,7 @@ export const Statistics = () => {
         <>
             <Header />
             <div style={{ padding: "20px" }}>
-                <h2 style={{ textAlign: "center" }}>Statistics: Mandal Name (SJ)</h2>
+                <h2 style={{ textAlign: "center" }}>Statistics: Mandal Name (SJ) (Static)</h2>
                 <h5>(210/450)</h5>
 
                 {/* Responsive layout */}

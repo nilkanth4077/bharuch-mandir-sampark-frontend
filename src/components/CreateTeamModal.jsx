@@ -84,7 +84,6 @@ function CreateTeamModal({ modal, setModal, mandalId }) {
       toast.success("Team created successfully!");
       setTimeout(() => {
         toggle();
-        window.location.reload();
       }, 3000);
     } catch (error) {
       console.error("Error creating team:", error);

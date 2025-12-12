@@ -46,6 +46,13 @@ const TeamHome = () => {
     }
   };
 
+  const filteredAhevaals = ahevaals.filter((item) =>
+    item.name?.toLowerCase().includes(qMandal.toLowerCase()) ||
+    item.phone?.toLowerCase().includes(qMandal.toLowerCase()) ||
+    item.address?.toLowerCase().includes(qMandal.toLowerCase()) ||
+    item.specialExp?.toLowerCase().includes(qMandal.toLowerCase())
+  );
+
   useEffect(() => {
     getMyAhevaals();
   }, []);
@@ -154,7 +161,7 @@ const TeamHome = () => {
               </thead>
 
               <tbody>
-                {ahevaals.map((item, index) => (
+                {filteredAhevaals.map((item, index) => (
                   <tr key={index}>
                     <td style={{ border: "1px solid #ddd", padding: "10px" }}>{item.name}</td>
                     <td style={{ border: "1px solid #ddd", padding: "10px" }}>{item.phone}</td>

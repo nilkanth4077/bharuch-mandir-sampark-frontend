@@ -8,7 +8,7 @@ import { useLocation } from "react-router-dom";
 import { BACKEND_ENDPOINT } from "../api/api";
 import axios from "axios";
 
-export default function SupervisorTeams() {
+export default function SupervisorTeams({ reload }) {
     const [openTeam, setOpenTeam] = useState(null);
     const [showEditMember, setShowEditMember] = useState(false);
     const [showEditTeam, setShowEditTeam] = useState(false);
@@ -64,7 +64,7 @@ export default function SupervisorTeams() {
         };
 
         fetchTeams();
-    }, [mandalId]);
+    }, [mandalId, reload]);
 
     console.log("Teams for mandal:", teams);
 

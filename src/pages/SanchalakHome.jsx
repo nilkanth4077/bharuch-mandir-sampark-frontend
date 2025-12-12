@@ -54,7 +54,7 @@ const SanchalakHome = () => {
         <Grid container spacing={2} sx={{ p: 2 }}>
 
           {/* CARD 1 */}
-          <Grid item xs={6} md={3}>
+          {/* <Grid item xs={6} md={3}>
             <Card sx={{
               aspectRatio: "1/1",
               background: "#ff6b6b", color: "#fff",
@@ -73,10 +73,10 @@ const SanchalakHome = () => {
                 </CardContent>
               </CardActionArea>
             </Card>
-          </Grid>
+          </Grid> */}
 
           {/* CARD 2 */}
-          <Grid item xs={6} md={3}>
+          <Grid item xs={6} md={4}>
             <Card sx={{
               aspectRatio: "1/1",
               background: "#4dabf7", color: "#fff",
@@ -98,7 +98,7 @@ const SanchalakHome = () => {
           </Grid>
 
           {/* CARD 3 */}
-          <Grid item xs={6} md={3}>
+          <Grid item xs={6} md={4}>
             <Card sx={{
               aspectRatio: "1/1",
               background: "#51cf66", color: "#fff",
@@ -116,7 +116,7 @@ const SanchalakHome = () => {
           </Grid>
 
           {/* CARD 4 */}
-          <Grid item xs={6} md={3}>
+          <Grid item xs={6} md={4}>
             <Card sx={{
               aspectRatio: "1/1",
               background: "#845ef7", color: "#fff",

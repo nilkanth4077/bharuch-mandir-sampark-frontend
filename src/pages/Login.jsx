@@ -10,7 +10,7 @@ import bapsLogo from './../resources/logoBaps.png';
 const Login = () => {
   const [loader, setLoader] = useState(false);
   const [loginData, setLoginData] = useState({
-    sevak_id: "",
+    userId: "",
     password: "",
   });
   const navigate = useNavigate();
@@ -22,110 +22,45 @@ const Login = () => {
     });
   };
 
-  // const handleSubmit = async (e) => {
-  //   setLoader(true);
-  //   e.preventDefault();
-  //   try {
-  //     const res = await axios.post(`${BACKEND_ENDPOINT}login/login`, loginData);
-  //     console.log(res);
-  //     if (res.data.status === true) {
-  //       const { sevak } = res.data;
-  //       localStorage.setItem("sevakDetails", JSON.stringify(sevak));
-
-  //       toast.success(res.data.message);
-
-  //       if (res.data.sevak.role !== 'Sant Nirdeshak' && res.data.sevak.role !== 'Admin') {
-  //         navigate("/home");
-  //       }
-  //       else {
-  //         navigate("/annkut-sevak-list");
-  //       }
-  //     } else {
-  //       toast.error("Login Failed: " + res.data.message);
-  //     }
-  //   } catch (error) {
-  //     toast.error("An error occurred: " + error.message);
-  //   } finally {
-  //     setLoader(false);
-  //   }
-  // };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoader(true);
 
-    // Static allowed users
-    const staticUsers = [
-      {
-        sevak_id: "admin",
-        password: "admin@123",
-        role: "Admin",
-        role_code: "Admin",
-        sevak_target: 100,
-        filled_form: 20,
-        achieved_target: 15
-      },
-      {
-        sevak_id: "nirdeshak",
-        password: "nirdeshak@123",
-        role: "Nirdeshak",
-        sevak_target: 100,
-        filled_form: 20,
-        achieved_target: 15
-      },
-      {
-        sevak_id: "nirikshak",
-        password: "nirikshak@123",
-        role: "Nirikshak",
-        sevak_target: 100,
-        filled_form: 20,
-        achieved_target: 15
-      },
-      {
-        sevak_id: "sanchalak",
-        password: "sanchalak@123",
-        role: "Sanchalak",
-        sevak_target: 100,
-        filled_form: 20,
-        achieved_target: 15
-      },
-      {
-        sevak_id: "team1",
-        password: "team1@123",
-        role: "Team",
-        sevak_target: 100,
-        filled_form: 20,
-        achieved_target: 15
-      },
-    ];
+    try {
+      const response = await axios.post(
+        `${BACKEND_ENDPOINT}/api/auth/login`,
+        loginData
+      );
+      console.log("Login response: ", response);
 
-    // Finding matching user
-    const foundUser = staticUsers.find(
-      (user) =>
-        user.sevak_id === loginData.sevak_id &&
-        user.password === loginData.password
-    );
+      const userData = response.data.user;
 
-    if (foundUser) {
-      toast.success("Login Successful");
+      if (userData) {
+        toast.success("Login Successful");
 
-      // store in localStorage same as backend
-      localStorage.setItem("sevakDetails", JSON.stringify(foundUser));
+        localStorage.setItem("sevakDetails", JSON.stringify(userData));
+        localStorage.setItem("password", loginData.password);
 
-      // redirect based on role
-      if (foundUser.role === "Admin") {
-        navigate("/admin-home");
-      } else if (foundUser.role === "Nirdeshak") {
-        navigate("/nirdeshak-home");
-      } else if (foundUser.role === "Nirikshak") {
-        navigate("/nirikshak-home");
-      } else if (foundUser.role === "Sanchalak") {
-        navigate("/sanchalak-home");
-      } else {
-        navigate("/team-home");
+        const role = userData.role;
+
+        if (role === "ADMIN") {
+          navigate("/admin-home");
+        } else if (role === "NIRDESHAK") {
+          navigate("/nirdeshak-home");
+        } else if (role === "NIRIKSHAK") {
+          navigate("/nirikshak-home");
+        } else if (role === "SANCHALAK") {
+          navigate("/sanchalak-home");
+        } else {
+          navigate("/team-home");
+        }
       }
-    } else {
-      toast.error("Invalid Sevak ID or Password");
+    } catch (error) {
+      console.log(error);
+
+      toast.error(
+        error.response?.data?.message || "Invalid Sevak ID or Password"
+      );
     }
 
     setLoader(false);
@@ -145,9 +80,9 @@ const Login = () => {
           <label>Sevak Id:</label>
           <input
             type="text"
-            name="sevak_id"
+            name="userId"
             onChange={handleChange}
-            value={loginData.sevak_id}
+            value={loginData.userId}
             required
           />
           <label>Password:</label>

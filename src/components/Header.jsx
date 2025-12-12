@@ -134,7 +134,10 @@ function Header(props) {
         </NavbarBrand>
 
         {/* RIGHT SIDE LOGOUT BUTTON */}
-        <div style={{ marginLeft: "auto" }}>
+        <div style={{ marginLeft: "auto", display: "flex", alignItems: "center" }}>
+          <h5
+            style={{ color: "white", marginInline: "10px", marginBottom: "0px" }}
+          >{sevakDetails.name}</h5>
           <Button
             style={{
               background: "#ffffff",

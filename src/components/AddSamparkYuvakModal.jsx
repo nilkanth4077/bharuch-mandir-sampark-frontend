@@ -13,10 +13,10 @@ import {
   Select,
 } from "@mui/material";
 
-function AddMemberModal({ modal, setModal }) {
+function AddSamparkYuvakModal({ modal, setModal }) {
 
-  const me = JSON.parse(localStorage.getItem("sevakDetails")) || {};
-  const mySevakCode = me?.sevak_code || me?.sevak_id || "";
+  const sevakDetails = JSON.parse(localStorage.getItem("sevakDetails")) || {};
+  const password = localStorage.getItem("password") || "";
 
   const [loader, setLoader] = useState(false);
   const [errors, setErrors] = useState({});
@@ -24,6 +24,7 @@ function AddMemberModal({ modal, setModal }) {
     name: "",
     phone: "",
     dob: "",
+    specialExp: "",
     address: "",
   });
   const toggle = () => setModal(!modal);
@@ -36,9 +37,11 @@ function AddMemberModal({ modal, setModal }) {
     setFormData((p) => ({ ...p, [name]: v }));
   };
 
+  const currentTime = new Date().toISOString();
+
   const validateForm = () => {
     const errs = {};
-    if (!formData.dob) errs.dob = "Enter Date of Birth";
+    if (!formData.specialExp) errs.dob = "Enter special Experience";
     if (!formData.name) errs.name = "Enter Name";
     if (!formData.phone) errs.phone = "Enter Phone No";
     if (!formData.address) errs.address = "Enter Address";
@@ -61,16 +64,39 @@ function AddMemberModal({ modal, setModal }) {
       const payload = {
         name: formData.name,
         phone: formData.phone,
-        dob: formData.dob,
         address: formData.address,
-        sevak_id: mySevakCode,
+        specialExp: formData.specialExp,
+        startTime: currentTime,
+        endTime: currentTime,
       };
-      alert("New member added: " + JSON.stringify(payload));
+
+      console.log("Payload:", payload);
+
+      const response = await axios.post(
+        `${BACKEND_ENDPOINT}/api/ahevaals`,
+        payload,
+        {
+          auth: {
+            username: sevakDetails.userId,
+            password: password,
+          },
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log("Add Sampark Yuvak Response:", response.data);
+
+      toast.success("Sampark Yuvak Added Successfully!");
+
+      setTimeout(() => {
+        toggle();
+      }, 3000);
     } catch (error) {
-      toast.error("An error occurred: " + error.message);
+      console.error(error);
+      toast.error("Error: " + (error.response?.data?.message || error.message));
     } finally {
       setLoader(false);
-      toggle();
     }
   };
 
@@ -112,16 +138,15 @@ function AddMemberModal({ modal, setModal }) {
 
           <FormControl fullWidth variant="outlined" margin="normal">
             <TextField
-              label="Date of Birth"
-              name="dob"
-              type="date"
-              value={formData.dob}
+              label="Special Experience"
+              name="specialExp"
+              type="text"
+              value={formData.specialExp}
               onChange={handleChange}
               variant="outlined"
               color="secondary"
-              InputLabelProps={{ shrink: true }}   // Ensures label doesn't overlap
-              error={!!errors.dob}
-              helperText={errors.dob}
+              error={!!errors.specialExp}
+              helperText={errors.specialExp}
               fullWidth
             />
           </FormControl>
@@ -194,4 +219,4 @@ function AddMemberModal({ modal, setModal }) {
   );
 }
 
-export default AddMemberModal;
+export default AddSamparkYuvakModal;

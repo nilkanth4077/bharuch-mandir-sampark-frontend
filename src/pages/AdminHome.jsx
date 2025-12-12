@@ -21,7 +21,6 @@ const AdminHome = () => {
   return (
     <>
       <Header />
-      {/* <SupervisorMandals /> */}
 
       <div>
         <h4 style={{ marginInline: "22px", marginTop: "25px" }}>Admin Dashboard</h4>
